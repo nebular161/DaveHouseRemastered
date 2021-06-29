@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class Menu : MonoBehaviour
 {
-    public static Menu Instance;
+    public string menuName;
+    public bool open;
 
-    private void Awake()
+    public void Open()
     {
-        Instance = this;
+        open = true;
+        gameObject.SetActive(true);
     }
-    public void OpenMenu(int indexOpen, int indexClose, GameObject[] menus)
+    public void Close()
     {
-        menus[indexOpen].SetActive(true);
-        menus[indexClose].SetActive(false);
+        open = false;
+        gameObject.SetActive(false);
     }
 }
