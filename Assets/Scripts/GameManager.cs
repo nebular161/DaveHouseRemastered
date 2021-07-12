@@ -6,6 +6,7 @@ using TMPro;
 using Newtonsoft.Json;
 using System.IO;
 using System;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -23,13 +24,15 @@ public class GameManager : MonoBehaviour
         Debug.Log(Application.persistentDataPath);
         UpdatePointsText();
         TestPoints();
-        SaveScoresToDisk();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if(Input.GetKeyDown(KeyCode.F5))
+        {
+            EndGame();
+        }
     }
     public void AddPoints(int amount)
     {
@@ -98,5 +101,6 @@ public class GameManager : MonoBehaviour
     public void EndGame()
     {
         SaveScore(points);
+        SceneManager.LoadScene("Menu");
     }
 }
