@@ -17,6 +17,8 @@ public class Move : MonoBehaviour
 
     public float rigidbodyVelocity;
 
+    public float minVelocity, maxVelocity;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -70,7 +72,7 @@ public class Move : MonoBehaviour
     }
     private void Update()
     {
-        if (rigidbodyVelocity > 1f && rigidbodyVelocity < 3f)
+        if (rigidbodyVelocity > minVelocity && rigidbodyVelocity < maxVelocity)
         {
             isWalking = true;
         }
