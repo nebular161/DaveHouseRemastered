@@ -80,7 +80,7 @@ public class GameManager : MonoBehaviour
         print(sussy);
 
         // generate filepath for scores
-        string path = Path.Combine(Application.persistentDataPath, "scores.json");
+        string path = Path.Combine(Application.persistentDataPath, PlayerPrefs.GetString("PlayerName"), "scores.json");
 
         // check if file exists already then generate the json
         if(!File.Exists(path))

@@ -2,19 +2,26 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using System.IO;
 
 public class EnterName : MonoBehaviour
 {
     public AudioSource daveAudio;
     public TMP_InputField nameEnter;
 
-    public AudioClip tryAgain, niceName;
+    public AudioClip tryAgain, niceName, welcomeBack;
     public void OnGo()
     {
-        if(!string.IsNullOrEmpty(nameEnter.text))
+        if (Directory.Exists(Path.Combine(Application.persistentDataPath, nameEnter.text)))
         {
             PlayerPrefs.SetString("PlayerName", nameEnter.text);
-            StartCoroutine(Continue());
+            StartCoroutine(Continue(welcomeBack));
+        }
+        if (!string.IsNullOrEmpty(nameEnter.text))
+        {
+            PlayerPrefs.SetString("PlayerName", nameEnter.text);
+            Directory.CreateDirectory(Path.Combine(Application.persistentDataPath, PlayerPrefs.GetString("PlayerName")));
+            StartCoroutine(Continue(niceName));
         }
         else
         {
@@ -22,11 +29,11 @@ public class EnterName : MonoBehaviour
             PlayAudio(daveAudio, tryAgain);
         }
     }
-    IEnumerator Continue()
+    IEnumerator Continue(AudioClip clip)
     {
         nameEnter.readOnly = true;
         StopAudioIfPlaying(daveAudio);
-        PlayAudio(daveAudio, niceName);
+        PlayAudio(daveAudio, clip);
 
         yield return new WaitForSeconds(niceName.length);
         SceneManager.LoadScene("Menu");

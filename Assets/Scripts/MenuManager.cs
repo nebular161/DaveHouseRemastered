@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using System.IO;
 
 public class MenuManager : MonoBehaviour
 {
@@ -75,5 +76,18 @@ public class MenuManager : MonoBehaviour
                 return;
             }
         }
+    }
+    public void DeleteData()
+    {
+        string path = Path.Combine(Application.persistentDataPath, PlayerPrefs.GetString("PlayerName"));
+        string[] files = Directory.GetFiles(path);
+
+        for (int i = 0; i < files.Length; i++)
+        {
+            File.Delete(files[i]);
+        }
+
+        Directory.Delete(path);
+        LoadScene("NameEnter");
     }
 }
