@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class MenuManager : MonoBehaviour
 {
@@ -9,9 +10,22 @@ public class MenuManager : MonoBehaviour
 
     [SerializeField] Menu[] menus;
 
+    public TMP_Text scoreText;
+
     private void Awake()
     {
-        Instance = this;
+        if(Instance == null)
+        {
+            Instance = this;
+        }
+        if(Instance != this)
+        {
+            Destroy(this);
+        }
+    }
+    private void Start()
+    {
+        Cursor.lockState = CursorLockMode.None;
     }
     public void OpenMenu(string name)
     {
@@ -45,5 +59,21 @@ public class MenuManager : MonoBehaviour
     public void LoadScene(string scene)
     {
         SceneManager.LoadScene(scene);
+    }
+    public void GetScores()
+    {
+        List<int> scores = new List<int>();
+        scores.Sort();
+        scores.AddRange(PlayerPrefsX.GetIntArray("Scores"));
+
+        for (int i = 0; i < scores.Count; i++)
+        {
+            scoreText.text += scores[i] + "\n";
+
+            if(i > 10)
+            {
+                return;
+            }
+        }
     }
 }

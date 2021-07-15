@@ -64,13 +64,14 @@ public class GameManager : MonoBehaviour
     {
         // convert list of scores to array
         _scores = scores.ToArray();
+
+        // sort scores
+        Array.Sort(_scores);
+
         PlayerPrefsX.SetIntArray("Scores", _scores);
 
         // print stuff
         print("Score array added to PlayerPrefs");
-
-        // sort scores
-        Array.Sort(_scores);
 
         // convert to json data
         string sussy = JsonConvert.SerializeObject(scores);
