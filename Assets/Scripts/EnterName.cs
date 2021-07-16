@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 using System.IO;
+using System.Collections.Generic;
 
 public class EnterName : MonoBehaviour
 {
@@ -10,6 +11,15 @@ public class EnterName : MonoBehaviour
     public TMP_InputField nameEnter;
 
     public AudioClip tryAgain, niceName, welcomeBack;
+
+    public TMP_Text saves;
+
+    List<string> dirs = new List<string>();
+
+    private void Start()
+    {
+        
+    }
     public void OnGo()
     {
         if (Directory.Exists(Path.Combine(Application.persistentDataPath, nameEnter.text)))
@@ -49,5 +59,19 @@ public class EnterName : MonoBehaviour
     {
         source.clip = clip;
         source.Play();
+    }
+    public void ShowSaves()
+    {
+        DirectoryInfo e = new DirectoryInfo(Application.persistentDataPath);
+        DirectoryInfo[] stuff = e.GetDirectories();
+
+        foreach (DirectoryInfo bruh in stuff)
+        {
+            dirs.Add(bruh.Name);
+        }
+        for (int i = 0; i < dirs.Count; i++)
+        {
+            saves.text += dirs[i] + "\n";
+        }
     }
 }
