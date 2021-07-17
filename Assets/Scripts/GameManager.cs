@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
 
     public TMP_Text pointsText;
 
+    public DiscordController discord;
 
     List<int> scores = new List<int>();
 
@@ -21,6 +22,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        discord.CreateRPC("test", "test");
         Debug.Log(Application.persistentDataPath);
         UpdatePointsText();
         TestPoints();
