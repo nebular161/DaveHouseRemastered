@@ -1,18 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public Collider fogTrigger, loadTrigger;
+    public void EnableFog()
     {
-        
+        RenderSettings.fog = true;
     }
-
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter(Collider other)
     {
-        
+        if (!RenderSettings.fog && other == fogTrigger)
+        {
+            EnableFog();
+        }
+        else if(other == loadTrigger)
+        {
+            SceneManager.LoadScene("VentHalls");
+        }
     }
 }

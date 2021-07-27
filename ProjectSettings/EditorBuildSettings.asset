@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/House.unity
     guid: e23573807f321d84fa64396082218508
+  - enabled: 1
+    path: Assets/Scenes/VentHalls.unity
+    guid: 3ba0d597e7ce4ec42be6b76987a59a88
   m_configObjects: {}
