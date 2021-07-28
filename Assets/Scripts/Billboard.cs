@@ -1,21 +1,31 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
+using System.Collections;
 
-// Token: 0x02000015 RID: 21
 public class Billboard : MonoBehaviour
 {
-	// Token: 0x0600005A RID: 90 RVA: 0x00003835 File Offset: 0x00001C35
-	private void Start()
-	{
-		this.m_Camera = GameObject.Find("Main Camera").GetComponent<Camera>();
-	}
 
-	// Token: 0x0600005B RID: 91 RVA: 0x0000384C File Offset: 0x00001C4C
-	private void LateUpdate()
-	{
-		base.transform.LookAt(base.transform.position + this.m_Camera.transform.rotation * Vector3.forward, this.m_Camera.transform.rotation * Vector3.up); // Look towards the player
-	}
+    void Start()
+    {
+        if (Billboard.cam == null)
+        {
+            cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Transform>();
+        }
+        freeRotation.y = 1;
+    }
 
-	// Token: 0x04000070 RID: 112
-	private Camera m_Camera;
+    static Transform cam;
+    public Vector3 freeRotation;
+    Vector3 eangles = Vector3.zero;
+
+
+    void LateUpdate()
+    {
+        this.transform.LookAt(Billboard.cam);
+        transform.Rotate(0, 180, 0);
+        eangles = transform.eulerAngles;
+        eangles.x *= freeRotation.x;
+        eangles.y *= freeRotation.y;
+        eangles.z *= freeRotation.z;
+        transform.eulerAngles = eangles;
+    }
 }

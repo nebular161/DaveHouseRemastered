@@ -481,6 +481,7 @@ GameObject:
   m_Component:
   - component: {fileID: 360367557}
   - component: {fileID: 360367556}
+  - component: {fileID: 360367558}
   m_Layer: 0
   m_Name: DaveAudio
   m_TagString: Untagged
@@ -598,6 +599,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &360367558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 360367555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 772e3cc14b163314795d6a1325e702ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundType: 0
 --- !u!1 &423833813
 GameObject:
   m_ObjectHideFlags: 0
@@ -1209,6 +1223,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1502975834}
   - component: {fileID: 1502975833}
+  - component: {fileID: 1502975835}
   m_Layer: 0
   m_Name: Music
   m_TagString: Untagged
@@ -1326,6 +1341,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1502975835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1502975832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 772e3cc14b163314795d6a1325e702ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundType: 1
 --- !u!1 &1553740389
 GameObject:
   m_ObjectHideFlags: 0

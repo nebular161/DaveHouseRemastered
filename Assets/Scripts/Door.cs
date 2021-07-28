@@ -9,15 +9,16 @@ public class Door : MonoBehaviour
     public Transform player;
     public BoxCollider doorCollider;
 
-    bool doorLocked = false;
-    bool doorOpen = false;
+    public bool doorLocked;
+    public bool doorOpen;
+    public bool lockInfinite;
     public float openingDistance;
     public float lockTime;
     public float openTime;
 
     public MeshRenderer inside, outside;
 
-    public Material openMaterial, closedMaterial;
+    public Material openMaterial, closedMaterial, lockedMaterial;
 
     public AudioClip openDoor, closeDoor;
 
@@ -29,13 +30,16 @@ public class Door : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(lockTime > 0)
+        if(!lockInfinite)
         {
-            lockTime -= 1 * Time.deltaTime;
-        }
-        else if(doorLocked)
-        {
-            UnlockDoor();
+            if (lockTime > 0)
+            {
+                lockTime -= 1 * Time.deltaTime;
+            }
+            else if (doorLocked)
+            {
+                UnlockDoor();
+            }
         }
 
         if(openTime > 0)
@@ -44,11 +48,7 @@ public class Door : MonoBehaviour
         }
         if(openTime <= 0 & doorOpen)
         {
-            doorCollider.enabled = true;
-            doorOpen = false;
-            inside.material = closedMaterial;
-            outside.material = closedMaterial;
-            audioSource.PlayOneShot(closeDoor);
+            CloseDoor();
         }
         if(Input.GetKeyDown(KeyCode.E))
         {
@@ -81,9 +81,28 @@ public class Door : MonoBehaviour
     {
         doorLocked = true;
         lockTime = time;
+        inside.material = lockedMaterial;
+        outside.material = lockedMaterial;
     }
     public void UnlockDoor()
     {
         doorLocked = false;
+        inside.material = closedMaterial;
+        outside.material = closedMaterial;
+    }
+    public void CloseDoor()
+    {
+        doorCollider.enabled = true;
+        doorOpen = false;
+        inside.material = closedMaterial;
+        outside.material = closedMaterial;
+        audioSource.PlayOneShot(closeDoor);
+    }
+    public void LockDoorInfinite()
+    {
+        doorLocked = true;
+        lockInfinite = true;
+        inside.material = lockedMaterial;
+        outside.material = lockedMaterial;
     }
 }

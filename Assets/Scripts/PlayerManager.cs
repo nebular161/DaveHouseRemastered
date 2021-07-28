@@ -5,7 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class PlayerManager : MonoBehaviour
 {
-    public Collider fogTrigger, loadTrigger;
+    public Collider fogTrigger, loadTrigger, daveSpeakTrigger;
+    public AudioSource daveAud;
+    public AudioSource music;
+
     public void EnableFog()
     {
         RenderSettings.fog = true;
@@ -19,6 +22,13 @@ public class PlayerManager : MonoBehaviour
         else if(other == loadTrigger)
         {
             SceneManager.LoadScene("VentHalls");
+        }
+        else if(other == daveSpeakTrigger)
+        {
+            daveAud.Play();
+            music.Play();
+            daveSpeakTrigger.enabled = false;
+            GameManager.Instance.DoLockStuff();
         }
     }
 }
