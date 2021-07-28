@@ -9,6 +9,8 @@ public class PlayerManager : MonoBehaviour
     public AudioSource daveAud;
     public AudioSource music;
 
+    public GameManager gameManager;
+
     public void EnableFog()
     {
         RenderSettings.fog = true;
@@ -28,7 +30,7 @@ public class PlayerManager : MonoBehaviour
             daveAud.Play();
             music.Play();
             daveSpeakTrigger.enabled = false;
-            GameManager.Instance.DoLockStuff();
+            gameManager.DoLockStuff();
         }
     }
 }

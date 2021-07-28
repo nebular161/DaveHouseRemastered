@@ -10,7 +10,6 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance;
 
     public Animator daveAnim;
     public AudioSource daveAud;
@@ -23,10 +22,10 @@ public class GameManager : MonoBehaviour
 
     public float treeMaxX, treeMinX, treeMaxZ, treeMinZ;
 
-    private void Awake()
-    {
-        Instance = this;
-    }
+    int notebooks;
+
+    public TMP_Text notebookText;
+
     private void Start()
     {
         SpawnTrees();
@@ -71,5 +70,14 @@ public class GameManager : MonoBehaviour
             Vector3 thing = new Vector3(UnityEngine.Random.Range(treeMinX, treeMaxX), 12, UnityEngine.Random.Range(treeMinZ, treeMaxZ));
             Instantiate(tree, thing, tree.transform.localRotation, treeParent.transform);
         }
+    }
+    public void CollectPresent()
+    {
+        notebooks++;
+        UpdatePresents();
+    }
+    public void UpdatePresents()
+    {
+        notebookText.text = "Presents: " + notebooks + "/10";
     }
 }
