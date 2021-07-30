@@ -5623,6 +5623,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   angle: 0
   angleF: 0
+  angleOffset: -90
   body: {fileID: 1300826348}
   sprites:
   - {fileID: 21300000, guid: d6f6ae4553dd8664a864e88181d89110, type: 3}
