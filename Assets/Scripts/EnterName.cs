@@ -18,25 +18,32 @@ public class EnterName : MonoBehaviour
 
     private void Start()
     {
-        
+        ShowSaves();
     }
     public void OnGo()
     {
         if (Directory.Exists(Path.Combine(Application.persistentDataPath, nameEnter.text)))
         {
+            print("Save found: " + nameEnter.text);
             PlayerPrefs.SetString("PlayerName", nameEnter.text);
             StartCoroutine(Continue(welcomeBack));
         }
-        if (!string.IsNullOrEmpty(nameEnter.text))
+        else if (!Directory.Exists(Path.Combine(Application.persistentDataPath, nameEnter.text)))
         {
+            print("Creating save file");
             PlayerPrefs.SetString("PlayerName", nameEnter.text);
             Directory.CreateDirectory(Path.Combine(Application.persistentDataPath, PlayerPrefs.GetString("PlayerName")));
             StartCoroutine(Continue(niceName));
         }
-        else
+        else if(string.IsNullOrEmpty(nameEnter.text))
         {
+            print("Name entered null");
             StopAudioIfPlaying(daveAudio);
             PlayAudio(daveAudio, tryAgain);
+        }
+        else
+        {
+            print("what the hell do i do");
         }
     }
     IEnumerator Continue(AudioClip clip)
@@ -45,7 +52,7 @@ public class EnterName : MonoBehaviour
         StopAudioIfPlaying(daveAudio);
         PlayAudio(daveAudio, clip);
 
-        yield return new WaitForSeconds(niceName.length);
+        yield return new WaitForSeconds(clip.length);
         SceneManager.LoadScene("Menu");
     }
     public void StopAudioIfPlaying(AudioSource source)

@@ -5,16 +5,15 @@ using UnityEngine.AI;
 
 public class Dave : MonoBehaviour
 {
-    public bool playerSeen;
-
-    public Transform player;
     NavMeshAgent agent;
+    public Transform player;
 
-    public AudioSource daveAud;
+    float angleDiff;
 
-    public float coolDown;
+    public float turnSpeed;
+    public float normalSpeed;
 
-    public float currentSpeed, normalSpeed, fastSpeed;
+    public AudioSource wheelchairAudio;
 
     void Start()
     {
@@ -24,32 +23,19 @@ public class Dave : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        TargetPlayer();
-    }
-    private void FixedUpdate()
-    {
-        Vector3 dir = player.position - transform.position;
-        RaycastHit raycastHit;
-        if(Physics.Raycast(transform.position, dir, out raycastHit, float.PositiveInfinity, 769, QueryTriggerInteraction.Ignore) & raycastHit.transform == player)
+        agent.SetDestination(player.position);
+        angleDiff = Mathf.DeltaAngle(transform.eulerAngles.y, Mathf.Atan2(agent.steeringTarget.x - transform.position.x, agent.steeringTarget.z - transform.position.z) * 57.29578f);
+
+        if(Mathf.Abs(angleDiff) < 5)
         {
-            if (!playerSeen && !daveAud.isPlaying)
-            {
-                print("Player seen");
-            }
-            playerSeen = true;
-            currentSpeed = fastSpeed;
+            transform.LookAt(new Vector3(agent.steeringTarget.x, transform.position.y, agent.steeringTarget.z));
+            agent.speed = normalSpeed;
         }
         else
         {
-            currentSpeed = normalSpeed;
-            if(playerSeen)
-            {
-                playerSeen = false;
-            }
+            transform.Rotate(new Vector3(0, turnSpeed * Mathf.Sign(angleDiff) * Time.deltaTime, 0));
+            agent.speed = 0;
         }
-    }
-    public void TargetPlayer()
-    {
-        agent.SetDestination(player.position);
+        wheelchairAudio.pitch = (agent.velocity.magnitude + 1) * Time.timeScale;
     }
 }

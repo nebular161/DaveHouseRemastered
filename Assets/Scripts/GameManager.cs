@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
 {
 
     public Animator daveAnim;
-    public AudioSource daveAud;
+    public AudioSource daveAud, music;
 
     public Door doorToLockAfterDaveSpeak;
 
@@ -26,9 +26,14 @@ public class GameManager : MonoBehaviour
 
     public TMP_Text notebookText;
 
-    private void Start()
+    public GameObject daveHappy, daveAngry;
+
+    bool musicStop;
+
+    void Start()
     {
         SpawnTrees();
+        UpdatePresents();
     }
     void Update()
     {
@@ -45,6 +50,10 @@ public class GameManager : MonoBehaviour
         else
         {
             daveAnim.SetBool("talking", false);
+        }
+        if(musicStop)
+        {
+            music.pitch -= 0.25f * Time.deltaTime;
         }
     }
     public void EndGame()
@@ -75,9 +84,28 @@ public class GameManager : MonoBehaviour
     {
         notebooks++;
         UpdatePresents();
+
+        if(notebooks == 1)
+        {
+            StartGame();
+        }
     }
     public void UpdatePresents()
     {
         notebookText.text = "Presents: " + notebooks + "/10";
+    }
+    public void StartGame()
+    {
+        daveHappy.SetActive(false);
+        daveAngry.SetActive(true);
+        StartCoroutine(StopSchoolMusic());
+    }
+    IEnumerator StopSchoolMusic()
+    {
+        musicStop = true;
+        yield return new WaitForSeconds(4);
+        music.Stop();
+        music.pitch = 1;
+        musicStop = false;
     }
 }

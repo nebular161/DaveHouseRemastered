@@ -1277,7 +1277,6 @@ GameObject:
   m_Component:
   - component: {fileID: 458035357}
   - component: {fileID: 458035359}
-  - component: {fileID: 458035358}
   m_Layer: 5
   m_Name: MusicVolume
   m_TagString: Untagged
@@ -1308,19 +1307,6 @@ RectTransform:
   m_AnchoredPosition: {x: 4, y: -45}
   m_SizeDelta: {x: 160, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &458035358
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 458035356}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d8b47c11552a994faab92768883d432, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerPrefsName: MusicVolume
 --- !u!114 &458035359
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1371,19 +1357,7 @@ MonoBehaviour:
   m_Value: 0.5
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 458035358}
-        m_TargetAssemblyTypeName: VolumeSliders, Assembly-CSharp
-        m_MethodName: SetSoundTypeVolume
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &468574481
 GameObject:
   m_ObjectHideFlags: 0
@@ -1804,6 +1778,9 @@ MonoBehaviour:
   - {fileID: 1582957003}
   - {fileID: 1212892007}
   scoreText: {fileID: 0}
+  musicSlider: {fileID: 458035359}
+  sfxSlider: {fileID: 650778607}
+  voicesSlider: {fileID: 939478574}
 --- !u!1 &520685159
 GameObject:
   m_ObjectHideFlags: 0
@@ -2242,7 +2219,6 @@ GameObject:
   m_Component:
   - component: {fileID: 650778605}
   - component: {fileID: 650778607}
-  - component: {fileID: 650778606}
   m_Layer: 5
   m_Name: SFXVolume
   m_TagString: Untagged
@@ -2273,19 +2249,6 @@ RectTransform:
   m_AnchoredPosition: {x: 4, y: -135}
   m_SizeDelta: {x: 160, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &650778606
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 650778604}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d8b47c11552a994faab92768883d432, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerPrefsName: SFXVolume
 --- !u!114 &650778607
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2336,19 +2299,7 @@ MonoBehaviour:
   m_Value: 0.5
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 650778606}
-        m_TargetAssemblyTypeName: VolumeSliders, Assembly-CSharp
-        m_MethodName: SetSoundTypeVolume
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &781269364
 GameObject:
   m_ObjectHideFlags: 0
@@ -3044,7 +2995,6 @@ GameObject:
   m_Component:
   - component: {fileID: 939478572}
   - component: {fileID: 939478574}
-  - component: {fileID: 939478573}
   m_Layer: 5
   m_Name: VoiceVolume
   m_TagString: Untagged
@@ -3075,19 +3025,6 @@ RectTransform:
   m_AnchoredPosition: {x: 4, y: -225}
   m_SizeDelta: {x: 160, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &939478573
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 939478571}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d8b47c11552a994faab92768883d432, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerPrefsName: VoiceVolume
 --- !u!114 &939478574
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3138,19 +3075,7 @@ MonoBehaviour:
   m_Value: 0.5
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 939478573}
-        m_TargetAssemblyTypeName: VolumeSliders, Assembly-CSharp
-        m_MethodName: SetSoundTypeVolume
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &952247900
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,7 +7,7 @@ public class Door : MonoBehaviour
     AudioSource audioSource;
 
     public Transform player;
-    public BoxCollider doorCollider;
+    public BoxCollider doorCollider, doorTrigger;
 
     public bool doorLocked;
     public bool doorOpen;
@@ -55,7 +55,7 @@ public class Door : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit raycastHit;
 
-            if (Physics.Raycast(ray, out raycastHit) && (raycastHit.collider == doorCollider & Vector3.Distance(player.position, transform.position) < openingDistance & !doorLocked))
+            if (Physics.Raycast(ray, out raycastHit) && ((raycastHit.collider == doorCollider || raycastHit.collider == doorTrigger) & Vector3.Distance(player.position, transform.position) < openingDistance & !doorLocked & !doorOpen))
             {
                 OpenDoor();
             }
@@ -69,13 +69,6 @@ public class Door : MonoBehaviour
         inside.material = openMaterial;
         outside.material = openMaterial;
         openTime = 3;
-    }
-    private void OnTriggerStay(Collider other)
-    {
-        if(!doorLocked & other.CompareTag("NPC"))
-        {
-            OpenDoor();
-        }
     }
     public void LockDoor(float time)
     {

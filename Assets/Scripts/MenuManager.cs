@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using TMPro;
 using System.IO;
+using Newtonsoft.Json;
 
 public class MenuManager : MonoBehaviour
 {
@@ -12,6 +14,10 @@ public class MenuManager : MonoBehaviour
     [SerializeField] Menu[] menus;
 
     public TMP_Text scoreText;
+
+    public Slider musicSlider, sfxSlider, voicesSlider;
+
+    Settings settings;
 
     private void Awake()
     {
@@ -27,6 +33,28 @@ public class MenuManager : MonoBehaviour
     private void Start()
     {
         Cursor.lockState = CursorLockMode.None;
+
+        string path = Path.Combine(Application.persistentDataPath, PlayerPrefs.GetString("PlayerName"), "menuSettings.json");
+        string rawJson = File.ReadAllText(path);
+
+        Settings _settings = JsonConvert.DeserializeObject<Settings>(rawJson);
+
+        if (File.Exists(path))
+        {
+            musicSlider.value = _settings.music;
+            sfxSlider.value = _settings.sfx;
+            voicesSlider.value = _settings.voices;
+        }
+        else
+        {
+            musicSlider.value = 0.5f;
+            sfxSlider.value = 0.5f;
+            voicesSlider.value = 0.5f;
+        }
+    }
+    private void Update()
+    {
+        SaveSettingsForUser();
     }
     public void OpenMenu(string name)
     {
@@ -61,22 +89,6 @@ public class MenuManager : MonoBehaviour
     {
         SceneManager.LoadScene(scene);
     }
-    public void GetScores()
-    {
-        List<int> scores = new List<int>();
-        scores.Sort();
-        scores.AddRange(PlayerPrefsX.GetIntArray("Scores"));
-
-        for (int i = 0; i < scores.Count; i++)
-        {
-            scoreText.text += scores[i] + "\n";
-
-            if(i > 10)
-            {
-                return;
-            }
-        }
-    }
     public void DeleteData()
     {
         string path = Path.Combine(Application.persistentDataPath, PlayerPrefs.GetString("PlayerName"));
@@ -90,4 +102,24 @@ public class MenuManager : MonoBehaviour
         Directory.Delete(path);
         LoadScene("NameEnter");
     }
+    public void SaveSettingsForUser()
+    {
+        settings = new Settings();
+
+        settings.music = musicSlider.value;
+        settings.sfx = sfxSlider.value;
+        settings.voices = voicesSlider.value;
+
+        string path = Path.Combine(Application.persistentDataPath, PlayerPrefs.GetString("PlayerName"), "menuSettings.json");
+        string serializedSettings = JsonConvert.SerializeObject(settings);
+
+        File.WriteAllText(path, serializedSettings);
+    }
+}
+public class Settings
+{
+    public float music;
+    public float sfx;
+    public float voices;
+    public float mouseSens;
 }

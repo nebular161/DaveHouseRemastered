@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Present
   - NPC
+  - DoorTrigger
   layers:
   - Default
   - TransparentFX
