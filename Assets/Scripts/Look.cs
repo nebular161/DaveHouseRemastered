@@ -14,6 +14,10 @@ public class Look : MonoBehaviour
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+
+        Settings settings = SaveManager.LoadSettings();
+
+        mouseSens = settings.settingValues[3];
     }
 
     // Update is called once per frame

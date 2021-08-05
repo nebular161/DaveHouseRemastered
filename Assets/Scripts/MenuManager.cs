@@ -15,9 +15,7 @@ public class MenuManager : MonoBehaviour
 
     public TMP_Text scoreText;
 
-    public Slider musicSlider, sfxSlider, voicesSlider;
-
-    Settings settings;
+    public Slider[] menuSliders;
 
     private void Awake()
     {
@@ -34,27 +32,25 @@ public class MenuManager : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.None;
 
-        string path = Path.Combine(Application.persistentDataPath, PlayerPrefs.GetString("PlayerName"), "menuSettings.json");
-        string rawJson = File.ReadAllText(path);
-
-        Settings _settings = JsonConvert.DeserializeObject<Settings>(rawJson);
-
-        if (File.Exists(path))
+        if(!File.Exists(Path.Combine(Application.persistentDataPath, PlayerPrefs.GetString("PlayerName"), "settings.davesettingsshit")))
         {
-            musicSlider.value = _settings.music;
-            sfxSlider.value = _settings.sfx;
-            voicesSlider.value = _settings.voices;
+            Settings settings = new Settings();
+
+            for (int bruh = 0; bruh < menuSliders.Length; bruh++)
+            {
+                menuSliders[bruh].value = settings.settingValues[bruh];
+            }
+            SaveSettings();
         }
         else
         {
-            musicSlider.value = 0.5f;
-            sfxSlider.value = 0.5f;
-            voicesSlider.value = 0.5f;
+            LoadSettings();
+            SaveSettings();
         }
     }
     private void Update()
     {
-        SaveSettingsForUser();
+        
     }
     public void OpenMenu(string name)
     {
@@ -102,24 +98,24 @@ public class MenuManager : MonoBehaviour
         Directory.Delete(path);
         LoadScene("NameEnter");
     }
-    public void SaveSettingsForUser()
+    public void SaveSettings()
     {
-        settings = new Settings();
+        Settings settings = new Settings();
 
-        settings.music = musicSlider.value;
-        settings.sfx = sfxSlider.value;
-        settings.voices = voicesSlider.value;
+        for (int i = 0; i < menuSliders.Length; i++)
+        {
+            settings.settingValues[i] = menuSliders[i].value;
+        }
 
-        string path = Path.Combine(Application.persistentDataPath, PlayerPrefs.GetString("PlayerName"), "menuSettings.json");
-        string serializedSettings = JsonConvert.SerializeObject(settings);
-
-        File.WriteAllText(path, serializedSettings);
+        SaveManager.SaveSettings(settings);
     }
-}
-public class Settings
-{
-    public float music;
-    public float sfx;
-    public float voices;
-    public float mouseSens;
+    public void LoadSettings()
+    {
+        Settings settings = SaveManager.LoadSettings();
+
+        for (int i = 0; i < settings.settingValues.Length; i++)
+        {
+            menuSliders[i].value = settings.settingValues[i];
+        }
+    }
 }
