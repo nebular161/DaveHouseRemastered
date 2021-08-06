@@ -89,6 +89,10 @@ public class GameManager : MonoBehaviour
         {
             StartGame();
         }
+        else if(notebooks == 10)
+        {
+            doorToLockAfterDaveSpeak.UnlockDoor();
+        }
     }
     public void UpdatePresents()
     {

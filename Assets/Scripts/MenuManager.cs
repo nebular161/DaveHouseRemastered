@@ -32,7 +32,7 @@ public class MenuManager : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.None;
 
-        if(!File.Exists(Path.Combine(Application.persistentDataPath, PlayerPrefs.GetString("PlayerName"), "settings.davesettingsshit")))
+        if(!File.Exists(Path.Combine(Application.persistentDataPath, PlayerPrefs.GetString("PlayerName"), "settings.davedata")))
         {
             Settings settings = new Settings();
 

@@ -5,20 +5,23 @@ using UnityEngine;
 public class SoundType : MonoBehaviour
 {
     public soundThing soundType;
-    // Update is called once per frame
+
+    Settings settings;
+
     void Update()
     {
-        if(soundType == soundThing.Music)
+        settings = SaveManager.LoadSettings();
+        if (soundType == soundThing.Music)
         {
-            base.GetComponent<AudioSource>().volume = PlayerPrefs.GetFloat("MusicVolume");
+            GetComponent<AudioSource>().volume = settings.settingValues[0];
         }
         if(soundType == soundThing.SFX)
         {
-            base.GetComponent<AudioSource>().volume = PlayerPrefs.GetFloat("SFXVolume");
+            GetComponent<AudioSource>().volume = settings.settingValues[1];
         }
         if (soundType == soundThing.Voice)
         {
-            base.GetComponent<AudioSource>().volume = PlayerPrefs.GetFloat("VoiceVolume");
+            GetComponent<AudioSource>().volume = settings.settingValues[2];
         }
     }
 

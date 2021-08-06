@@ -8,7 +8,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 public class SaveManager : MonoBehaviour
 {
     public static string directory = PlayerPrefs.GetString("PlayerName");
-    public static string filename = "settings.davesettingsshit";
+    public static string filename = "settings.davedata";
 
     public static void SaveSettings(Settings settings)
     {
