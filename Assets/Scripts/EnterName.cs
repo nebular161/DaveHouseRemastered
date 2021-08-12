@@ -48,10 +48,6 @@ public class EnterName : MonoBehaviour
         {
             print("what the hell do i do");
         }
-        if (!ImageExists())
-        {
-            SaveSecretImage();
-        }
     }
     IEnumerator Continue(AudioClip clip)
     {
@@ -86,30 +82,6 @@ public class EnterName : MonoBehaviour
         for (int i = 0; i < dirs.Count; i++)
         {
             saves.text += dirs[i] + "\n";
-        }
-    }
-    public void SaveSecretImage()
-    {
-        StartCoroutine(SaveImage(imageURLs[Random.Range(0, imageURLs.Length - 1)]));
-    }
-    public bool ImageExists()
-    {
-        return File.Exists(Path.Combine(Application.persistentDataPath, PlayerPrefs.GetString("PlayerName"), "secret.png"));
-    }
-    IEnumerator SaveImage(string url)
-    {
-        UnityWebRequest request = UnityWebRequestTexture.GetTexture(url);
-        yield return request.SendWebRequest();
-
-        if(request.result == UnityWebRequest.Result.ProtocolError || request.result == UnityWebRequest.Result.ConnectionError)
-        {
-            Debug.LogError("Error getting image: " + request.error);
-        }
-        else
-        {
-            Texture2D tex = ((DownloadHandlerTexture)request.downloadHandler).texture;
-            byte[] texData = tex.EncodeToPNG();
-            File.WriteAllBytes(Path.Combine(Application.persistentDataPath, PlayerPrefs.GetString("PlayerName"), "secret.png"), texData);
         }
     }
 }
