@@ -10,6 +10,7 @@ public class PlayerManager : MonoBehaviour
     public AudioSource music;
 
     public GameManager gameManager;
+    public ItemManager itmManager;
 
     public void EnableFog()
     {

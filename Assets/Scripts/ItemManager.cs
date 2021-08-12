@@ -19,6 +19,8 @@ public class ItemManager : MonoBehaviour
 
     public TMP_Text itemText;
 
+    public Move playerMovement;
+
     void Start()
     {
         selectedItem = 0;
@@ -30,7 +32,7 @@ public class ItemManager : MonoBehaviour
     {
         ScrollThroughItems();
 
-        if(Input.GetMouseButtonDown(1))
+        if(Input.GetMouseButtonDown(1) && items[selectedItem] != 0)
         {
             UseItem();
         }
@@ -85,6 +87,12 @@ public class ItemManager : MonoBehaviour
     }
     public void UseItem()
     {
-
+        switch (items[selectedItem])
+        {
+            case 1:
+                playerMovement.stamina = 250;
+                ReplaceItem(selectedItem, 0);
+                break;      
+        }
     }
 }
