@@ -14,10 +14,10 @@ public class MenuManager : MonoBehaviour
     [SerializeField] Menu[] menus;
 
     public TMP_Text scoreText;
-
+    
     public Slider[] menuSliders;
 
-    private void Awake()
+    public void Awake()
     {
         if(Instance == null)
         {
@@ -50,7 +50,7 @@ public class MenuManager : MonoBehaviour
     }
     private void Update()
     {
-        
+        SaveSettings();
     }
     public void OpenMenu(string name)
     {

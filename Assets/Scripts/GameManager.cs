@@ -30,6 +30,8 @@ public class GameManager : MonoBehaviour
 
     bool musicStop;
 
+    public bool chaseMode;
+
     void Start()
     {
         SpawnTrees();
@@ -49,6 +51,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            //the only option to make this work in the audManager was to make it not destroy itself when it was done, and no other way works, WTF?
             daveAnim.SetBool("talking", false);
         }
         if(musicStop)
@@ -100,9 +103,13 @@ public class GameManager : MonoBehaviour
     }
     public void StartGame()
     {
-        daveHappy.SetActive(false);
-        daveAngry.SetActive(true);
-        StartCoroutine(StopSchoolMusic());
+        if (!chaseMode)
+        {
+            daveHappy.SetActive(false);
+            daveAngry.SetActive(true);
+            StartCoroutine(StopSchoolMusic());
+            chaseMode = true;
+        }
     }
     IEnumerator StopSchoolMusic()
     {
