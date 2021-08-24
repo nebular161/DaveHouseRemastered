@@ -5420,6 +5420,9 @@ MonoBehaviour:
   daveHappy: {fileID: 734424258}
   daveAngry: {fileID: 1300826347}
   chaseMode: 0
+  presentSprites:
+  - {fileID: 1116282595}
+  presentMat: {fileID: 2100000, guid: 3c4ebf4b88c00c64da432efcbac583b0, type: 2}
 --- !u!4 &447439122
 Transform:
   m_ObjectHideFlags: 0
@@ -16035,7 +16038,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 3c4ebf4b88c00c64da432efcbac583b0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
