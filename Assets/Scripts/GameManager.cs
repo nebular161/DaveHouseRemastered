@@ -127,7 +127,7 @@ public class GameManager : MonoBehaviour
     {
         foreach(Renderer renderer in presentSprites)
         {
-            renderer.material.SetFloat("_HSVAAdjust", UnityEngine.Random.Range(0f, 1f));
+            renderer.material.SetVector("_HSVAAdjust", new Vector4(UnityEngine.Random.Range(0f, 1f), 0, 0, 0));
         }
     }
 }

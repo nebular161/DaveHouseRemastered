@@ -19,6 +19,8 @@ public class PlayerManager : MonoBehaviour
 
     public static bool transitioning = false;
 
+    public AudioClip daveTalk, musicAud;
+
     private void Awake()
     {
         if (transitioning) transitioning = false;
@@ -52,8 +54,10 @@ public class PlayerManager : MonoBehaviour
         }
         else if(other == daveSpeakTrigger)
         {
-            AudioManager.instance.PlaySound("DaveIntroTalk", null, 0);
-            AudioManager.instance.PlaySound("Music", null, 0);
+            daveAud.clip = daveTalk;
+            music.clip = musicAud;
+            daveAud.Play();
+            music.Play();
             music = GameObject.Find("Music").GetComponent<AudioSource>();
             daveAud = GameObject.Find("DaveIntroTalk").GetComponent<AudioSource>();
             gameManager.daveAud = daveAud;

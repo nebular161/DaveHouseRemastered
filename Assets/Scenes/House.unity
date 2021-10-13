@@ -733,7 +733,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &766512
 BoxCollider:
@@ -5406,7 +5406,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   daveAnim: {fileID: 2143229371}
-  daveAud: {fileID: 0}
+  daveAud: {fileID: 734424260}
   music: {fileID: 0}
   doorToLockAfterDaveSpeak: {fileID: 1630515119}
   treeSpawnCount: 10
@@ -9101,78 +9101,6 @@ MonoBehaviour:
   openMaterial: {fileID: 2100000, guid: 3e84c4d58fdee23428d1ddb74f5f8aa2, type: 2}
   closedMaterial: {fileID: 2100000, guid: a269735409dae4a4fa1f063b739382c5, type: 2}
   lockedMaterial: {fileID: 2100000, guid: 73831f68131fd3d4aba26ee175740d8a, type: 2}
---- !u!1 &685546848
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 685546850}
-  - component: {fileID: 685546849}
-  m_Layer: 0
-  m_Name: AudioManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &685546849
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 685546848}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b6d6ae7e7f108f49bb842b86def6167, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sounds:
-  - soundType: 1
-    clip: {fileID: 8300000, guid: 64ec300ae604a9b448cf0e1f514251cc, type: 3}
-    volume: 1
-    name: DaveIntroTalk
-    Loop: 0
-    PlayOnAwake: 0
-    destroyWhenFinished: 0
-  - soundType: 0
-    clip: {fileID: 8300000, guid: 45904ee1609c7f34989c4bac3e20cf83, type: 3}
-    volume: 0
-    name: DoorOpen
-    Loop: 0
-    PlayOnAwake: 0
-    destroyWhenFinished: 0
-  - soundType: 0
-    clip: {fileID: 8300000, guid: addfbad6eb3906f4bb8fa93aaeb08ded, type: 3}
-    volume: 0
-    name: DoorClose
-    Loop: 0
-    PlayOnAwake: 0
-    destroyWhenFinished: 0
-  - soundType: 2
-    clip: {fileID: 8300000, guid: 9a9e5fe65de2014469e086430205d2ed, type: 3}
-    volume: 0
-    name: Music
-    Loop: 1
-    PlayOnAwake: 0
-    destroyWhenFinished: 0
---- !u!4 &685546850
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 685546848}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 149.97597, y: -20.148348, z: 14.410478}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 11
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &691196203
 GameObject:
   m_ObjectHideFlags: 0

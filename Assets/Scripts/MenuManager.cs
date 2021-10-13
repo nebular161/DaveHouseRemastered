@@ -14,8 +14,8 @@ public class MenuManager : MonoBehaviour
     [SerializeField] Menu[] menus;
 
     public TMP_Text scoreText;
-    
-    public Slider[] menuSliders;
+
+    public Slider volumeSlider;
 
     public void Awake()
     {
@@ -35,12 +35,7 @@ public class MenuManager : MonoBehaviour
         if(!File.Exists(Path.Combine(Application.persistentDataPath, PlayerPrefs.GetString("PlayerName"), "settings.davedata")))
         {
             Settings settings = new Settings();
-
-            for (int bruh = 0; bruh < menuSliders.Length; bruh++)
-            {
-                menuSliders[bruh].value = settings.settingValues[bruh];
-            }
-            SaveSettings();
+            SaveManager.SaveSettings(settings);
         }
         else
         {
@@ -102,10 +97,7 @@ public class MenuManager : MonoBehaviour
     {
         Settings settings = new Settings();
 
-        for (int i = 0; i < menuSliders.Length; i++)
-        {
-            settings.settingValues[i] = menuSliders[i].value;
-        }
+        settings.volume = volumeSlider.value;
 
         SaveManager.SaveSettings(settings);
     }
@@ -113,9 +105,6 @@ public class MenuManager : MonoBehaviour
     {
         Settings settings = SaveManager.LoadSettings();
 
-        for (int i = 0; i < settings.settingValues.Length; i++)
-        {
-            menuSliders[i].value = settings.settingValues[i];
-        }
+        volumeSlider.value = settings.volume;
     }
 }

@@ -20,6 +20,8 @@ public class Door : MonoBehaviour
 
     public Material openMaterial, closedMaterial, lockedMaterial;
 
+    public AudioClip doorOpenAud, doorCloseAud;
+
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
@@ -61,7 +63,8 @@ public class Door : MonoBehaviour
     }
     public void OpenDoor()
     {
-        AudioManager.instance.PlaySound("DoorOpen", audioSource, 0);
+        audioSource.clip = doorOpenAud;
+        audioSource.Play();
         doorCollider.enabled = false;
         doorOpen = true;
         inside.material = openMaterial;
@@ -87,7 +90,8 @@ public class Door : MonoBehaviour
         doorOpen = false;
         inside.material = closedMaterial;
         outside.material = closedMaterial;
-        AudioManager.instance.PlaySound("DoorClose", audioSource, 0);
+        audioSource.clip = doorCloseAud;
+        audioSource.Play();
     }
     public void LockDoorInfinite()
     {

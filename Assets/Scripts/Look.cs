@@ -19,7 +19,7 @@ public class Look : MonoBehaviour
 
         Settings settings = SaveManager.LoadSettings();
 
-        mouseSens = settings.settingValues[3];
+        mouseSens = settings.sens;
     }
 
     // Update is called once per frame
