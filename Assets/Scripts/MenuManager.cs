@@ -15,8 +15,6 @@ public class MenuManager : MonoBehaviour
 
     public TMP_Text scoreText;
 
-    public Slider volumeSlider;
-
     public void Awake()
     {
         if(Instance == null)
@@ -31,21 +29,10 @@ public class MenuManager : MonoBehaviour
     private void Start()
     {
         Cursor.lockState = CursorLockMode.None;
-
-        if(!File.Exists(Path.Combine(Application.persistentDataPath, PlayerPrefs.GetString("PlayerName"), "settings.davedata")))
-        {
-            Settings settings = new Settings();
-            SaveManager.SaveSettings(settings);
-        }
-        else
-        {
-            LoadSettings();
-            SaveSettings();
-        }
     }
     private void Update()
     {
-        SaveSettings();
+        
     }
     public void OpenMenu(string name)
     {
@@ -92,19 +79,5 @@ public class MenuManager : MonoBehaviour
 
         Directory.Delete(path);
         LoadScene("NameEnter");
-    }
-    public void SaveSettings()
-    {
-        Settings settings = new Settings();
-
-        settings.volume = volumeSlider.value;
-
-        SaveManager.SaveSettings(settings);
-    }
-    public void LoadSettings()
-    {
-        Settings settings = SaveManager.LoadSettings();
-
-        volumeSlider.value = settings.volume;
     }
 }

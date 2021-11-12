@@ -4249,6 +4249,8 @@ MonoBehaviour:
   openMaterial: {fileID: 2100000, guid: 3e84c4d58fdee23428d1ddb74f5f8aa2, type: 2}
   closedMaterial: {fileID: 2100000, guid: a269735409dae4a4fa1f063b739382c5, type: 2}
   lockedMaterial: {fileID: 2100000, guid: 73831f68131fd3d4aba26ee175740d8a, type: 2}
+  doorOpenAud: {fileID: 0}
+  doorCloseAud: {fileID: 0}
 --- !u!1 &266403667
 GameObject:
   m_ObjectHideFlags: 0
@@ -5386,6 +5388,7 @@ GameObject:
   - component: {fileID: 447439122}
   - component: {fileID: 447439121}
   - component: {fileID: 447439123}
+  - component: {fileID: 447439124}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -5469,6 +5472,18 @@ MonoBehaviour:
   items: 000000000000000000000000
   itemText: {fileID: 750346731}
   playerMovement: {fileID: 1061797672}
+--- !u!114 &447439124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 447439120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3537013c3ea07349aa1701cdf7c2006, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &448070305
 GameObject:
   m_ObjectHideFlags: 0
@@ -9101,6 +9116,8 @@ MonoBehaviour:
   openMaterial: {fileID: 2100000, guid: 3e84c4d58fdee23428d1ddb74f5f8aa2, type: 2}
   closedMaterial: {fileID: 2100000, guid: a269735409dae4a4fa1f063b739382c5, type: 2}
   lockedMaterial: {fileID: 2100000, guid: 73831f68131fd3d4aba26ee175740d8a, type: 2}
+  doorOpenAud: {fileID: 0}
+  doorCloseAud: {fileID: 0}
 --- !u!1 &691196203
 GameObject:
   m_ObjectHideFlags: 0
@@ -14965,6 +14982,8 @@ MonoBehaviour:
   openMaterial: {fileID: 2100000, guid: 3e84c4d58fdee23428d1ddb74f5f8aa2, type: 2}
   closedMaterial: {fileID: 2100000, guid: a269735409dae4a4fa1f063b739382c5, type: 2}
   lockedMaterial: {fileID: 2100000, guid: 73831f68131fd3d4aba26ee175740d8a, type: 2}
+  doorOpenAud: {fileID: 0}
+  doorCloseAud: {fileID: 0}
 --- !u!1 &1061797670
 GameObject:
   m_ObjectHideFlags: 0
@@ -15075,6 +15094,8 @@ MonoBehaviour:
   gameManager: {fileID: 447439121}
   itmManager: {fileID: 0}
   inCaves: 0
+  daveTalk: {fileID: 0}
+  musicAud: {fileID: 0}
 --- !u!1 &1063158889
 GameObject:
   m_ObjectHideFlags: 0
@@ -19165,6 +19186,8 @@ MonoBehaviour:
   openMaterial: {fileID: 2100000, guid: 3e84c4d58fdee23428d1ddb74f5f8aa2, type: 2}
   closedMaterial: {fileID: 2100000, guid: a269735409dae4a4fa1f063b739382c5, type: 2}
   lockedMaterial: {fileID: 2100000, guid: 73831f68131fd3d4aba26ee175740d8a, type: 2}
+  doorOpenAud: {fileID: 0}
+  doorCloseAud: {fileID: 0}
 --- !u!1 &1244214179
 GameObject:
   m_ObjectHideFlags: 0
@@ -24135,6 +24158,8 @@ MonoBehaviour:
   openMaterial: {fileID: 2100000, guid: 3e84c4d58fdee23428d1ddb74f5f8aa2, type: 2}
   closedMaterial: {fileID: 2100000, guid: a269735409dae4a4fa1f063b739382c5, type: 2}
   lockedMaterial: {fileID: 2100000, guid: 73831f68131fd3d4aba26ee175740d8a, type: 2}
+  doorOpenAud: {fileID: 0}
+  doorCloseAud: {fileID: 0}
 --- !u!1 &1632368832
 GameObject:
   m_ObjectHideFlags: 0
@@ -26273,6 +26298,8 @@ MonoBehaviour:
   openMaterial: {fileID: 2100000, guid: 3e84c4d58fdee23428d1ddb74f5f8aa2, type: 2}
   closedMaterial: {fileID: 2100000, guid: a269735409dae4a4fa1f063b739382c5, type: 2}
   lockedMaterial: {fileID: 2100000, guid: 73831f68131fd3d4aba26ee175740d8a, type: 2}
+  doorOpenAud: {fileID: 0}
+  doorCloseAud: {fileID: 0}
 --- !u!1 &1808011425
 GameObject:
   m_ObjectHideFlags: 0
@@ -30071,6 +30098,8 @@ MonoBehaviour:
   openMaterial: {fileID: 2100000, guid: 3e84c4d58fdee23428d1ddb74f5f8aa2, type: 2}
   closedMaterial: {fileID: 2100000, guid: a269735409dae4a4fa1f063b739382c5, type: 2}
   lockedMaterial: {fileID: 2100000, guid: 73831f68131fd3d4aba26ee175740d8a, type: 2}
+  doorOpenAud: {fileID: 0}
+  doorCloseAud: {fileID: 0}
 --- !u!1 &2079420958
 GameObject:
   m_ObjectHideFlags: 0
