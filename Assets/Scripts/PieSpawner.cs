@@ -25,8 +25,11 @@ public class PieSpawner : MonoBehaviour
     }
     private void OnTriggerEnter(Collider collision)
     {
-        source.clip = splat;
-        source.Play();
-        Destroy(gameObject, 0);
+        if(collision.name == "DaveAngry")
+        {
+            source.clip = splat;
+            source.Play();
+            Destroy(gameObject, 0);
+        }
     }
 }

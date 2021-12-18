@@ -6,6 +6,15 @@ using DG.Tweening;
 public class TopSecretElevatorEntrance : MonoBehaviour
 {
     public ItemManager itmManager;
+    public Material secret;
+
+    private void Update()
+    {
+        if (itmManager.items[itmManager.selectedItem] == 3)
+        {
+            gameObject.GetComponent<MeshRenderer>().material = secret;
+        }
+    }
     private void OnTriggerEnter(Collider other)
     {
         if(itmManager.items[itmManager.selectedItem] == 3)
