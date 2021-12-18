@@ -5,8 +5,12 @@ public class PieSpawner : MonoBehaviour
     public float speed;
     public float lifeSpan;
     private Rigidbody rb;
+
+    AudioSource source;
+    public AudioClip splat;
     void Start()
     {
+        source = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody>();
         rb.velocity = transform.forward * speed;
     }
@@ -18,5 +22,11 @@ public class PieSpawner : MonoBehaviour
         {
             Destroy(gameObject, 0);
         }
+    }
+    private void OnTriggerEnter(Collider collision)
+    {
+        source.clip = splat;
+        source.Play();
+        Destroy(gameObject, 0);
     }
 }

@@ -116,6 +116,9 @@ public class ItemManager : MonoBehaviour
                 Instantiate(pieMovingThing, playerPosition, cam.rotation);
                 ReplaceItem(selectedItem, 0);
                 break;
+            case 3:
+                Debug.Log("haha this item has no use");
+                break;
         }
     }
 }

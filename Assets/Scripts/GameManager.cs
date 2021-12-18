@@ -32,14 +32,10 @@ public class GameManager : MonoBehaviour
 
     public bool chaseMode;
 
-    public SpriteRenderer[] presentSprites;
-    public Material presentMat;
-
     void Start()
     {
         SpawnTrees();
         UpdatePresents();
-        RandomizeNotebookColors();
     }
     void Update()
     {
@@ -122,12 +118,5 @@ public class GameManager : MonoBehaviour
         music.Stop();
         music.pitch = 1;
         musicStop = false;
-    }
-    public void RandomizeNotebookColors()
-    {
-        foreach(Renderer renderer in presentSprites)
-        {
-            renderer.material.SetVector("_HSVAAdjust", new Vector4(UnityEngine.Random.Range(0f, 1f), 0, 0, 0));
-        }
     }
 }

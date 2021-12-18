@@ -7,9 +7,16 @@ public class Present : MonoBehaviour
     public Transform player;
     public float collectDistance;
     public GameManager gameManager;
+
+    public Shader HSVShader;
+    public Material presentMaterial;
     void Start()
     {
-        
+        Material colorFunny = new Material(presentMaterial);
+        colorFunny.shader = HSVShader;
+        SpriteRenderer sprite = GetComponentInChildren<SpriteRenderer>();
+        sprite.material = colorFunny;
+        sprite.material.SetVector("_HSVAAdjust", new Vector4(Random.Range(0f, 1f), 0, 0, 0));
     }
 
     // Update is called once per frame

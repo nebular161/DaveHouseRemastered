@@ -49,6 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   lifeSpan: 30
+  splat: {fileID: 8300000, guid: 025910f240d8aff469618c2c7bfe7336, type: 3}
 --- !u!54 &1167421310196824412
 Rigidbody:
   m_ObjectHideFlags: 0

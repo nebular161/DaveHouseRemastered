@@ -34,6 +34,12 @@ public class Item : MonoBehaviour
                     itmManager.AddItem(2);
                     return;
                 }
+                else if (raycastHit.transform.name == "Itm_Locator")
+                {
+                    Destroy(raycastHit.transform.gameObject);
+                    itmManager.AddItem(3);
+                    return;
+                }
             }
         }
     }
