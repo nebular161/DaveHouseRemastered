@@ -20,8 +20,6 @@ public class Move : MonoBehaviour
 
     public float minVelocity, maxVelocity;
 
-    public Transform cam;
-
     public static Vector3 transPos;
 
     void Start()

@@ -21,6 +21,13 @@ public class ItemManager : MonoBehaviour
 
     public Move playerMovement;
 
+    public Transform player, cam;
+    public GameObject pieMovingThing;
+
+    public GameObject[] itemDrop;
+
+    Vector3 playerPosition;
+
     void Start()
     {
         selectedItem = 0;
@@ -32,10 +39,17 @@ public class ItemManager : MonoBehaviour
     {
         ScrollThroughItems();
 
-        if(Input.GetMouseButtonDown(1) && items[selectedItem] != 0)
+        if(Input.GetMouseButtonDown(1) && items[selectedItem] != 0 & Time.timeScale != 0)
         {
             UseItem();
         }
+        if(Input.GetKeyDown(KeyCode.R) && items[selectedItem] != 0 & Time.timeScale != 0)
+        {
+            Drop();
+        }
+
+        playerPosition = player.position;
+        playerPosition.y = player.position.y + 3;
     }
     public void ScrollThroughItems()
     {
@@ -64,7 +78,7 @@ public class ItemManager : MonoBehaviour
     {
         if(items[selectedItem] != 0)
         {
-            DropItem(items[selectedItem]);
+            Drop();
             ReplaceItem(selectedItem, item);
         }
         else
@@ -76,8 +90,13 @@ public class ItemManager : MonoBehaviour
     }
     public void DropItem(int item)
     {
-        Debug.Log("Item dropped");
-        // do stuff
+        Instantiate(itemDrop[item], playerPosition, player.rotation);
+        ReplaceItem(selectedItem, 0);
+    }
+    public void Drop()
+    {
+        DropItem(items[selectedItem]);
+        UpdateName();
     }
     public void ReplaceItem(int slot, int item)
     {
@@ -92,7 +111,11 @@ public class ItemManager : MonoBehaviour
             case 1:
                 playerMovement.stamina = 250;
                 ReplaceItem(selectedItem, 0);
-                break;      
+                break;
+            case 2:
+                Instantiate(pieMovingThing, playerPosition, cam.rotation);
+                ReplaceItem(selectedItem, 0);
+                break;
         }
     }
 }

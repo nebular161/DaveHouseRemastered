@@ -4,8 +4,17 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
-    public ItemManager itmManager;
-    public Transform player;
+    ItemManager itmManager;
+    Transform player;
+
+    public string itemName;
+
+    private void Start()
+    {
+        itmManager = GameObject.Find("GameManager").GetComponent<ItemManager>();
+        player = GameObject.Find("Player").transform;
+        gameObject.name = itemName;
+    }
     void Update()
     {
         RaycastHit raycastHit;
@@ -15,8 +24,14 @@ public class Item : MonoBehaviour
             {
                 if(raycastHit.transform.name == "Itm_Cake")
                 {
-                    raycastHit.transform.gameObject.SetActive(false);
+                    Destroy(raycastHit.transform.gameObject);
                     itmManager.AddItem(1);
+                    return;
+                }
+                else if (raycastHit.transform.name == "Itm_Pie")
+                {
+                    Destroy(raycastHit.transform.gameObject);
+                    itmManager.AddItem(2);
                     return;
                 }
             }

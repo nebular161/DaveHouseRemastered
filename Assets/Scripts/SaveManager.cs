@@ -4,6 +4,7 @@ using UnityEngine;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
+using UnityEngine.SceneManagement;
 
 public class SaveManager : MonoBehaviour
 {
@@ -32,7 +33,8 @@ public class SaveManager : MonoBehaviour
             }
             catch(SerializationException ex)
             {
-                Debug.LogError("File loading failed: " + ex);
+                Debug.LogWarning("File loading failed: " + ex);
+                SceneManager.LoadScene("FileCorrupt");
             }
         }
 

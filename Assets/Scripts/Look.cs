@@ -22,9 +22,10 @@ public class Look : MonoBehaviour
             Settings settings = SaveManager.LoadSettings();
             mouseSens = settings.sens;
         }
-        else
+        else if(!SaveManager.SaveExists())
         {
             mouseSens = 300;
+            Debug.LogWarning("Save does not exist");
         }
     }
 
