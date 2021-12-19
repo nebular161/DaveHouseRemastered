@@ -28,7 +28,7 @@ public class PlayerManager : MonoBehaviour
 
     private void Start()
     {
-        if (inCaves) SceneLoadTransition.instance.FadeInTransition(0.5f);
+        
     }
 
     public void EnableFog()
@@ -39,20 +39,7 @@ public class PlayerManager : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (!RenderSettings.fog && other == fogTrigger)
-        {
-            EnableFog();
-        }
-        else if(other == loadTrigger & !loadingAScene)
-        {
-            SceneLoadTransition.instance.LoadTransition("VentHalls", .5f);
-            if (gameManager.music.isPlaying)
-            {
-                gameManager.music.DOFade(0, 0.5f);
-            }
-            loadingAScene = true;
-        }
-        else if(other == daveSpeakTrigger)
+        if(other == daveSpeakTrigger)
         {
             daveAud.clip = daveTalk;
             music.clip = musicAud;
