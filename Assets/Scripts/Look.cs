@@ -17,22 +17,13 @@ public class Look : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
 
-        if (SaveManager.SaveExists())
-        {
-            Settings settings = SaveManager.LoadSettings();
-            mouseSens = settings.sens;
-        }
-        else if(!SaveManager.SaveExists())
-        {
-            mouseSens = 300;
-            Debug.LogWarning("Save does not exist");
-        }
+        mouseSens = PlayerPrefs.GetFloat("Sensitivity");
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!PlayerManager.transitioning & !lockRot)
+        if (!lockRot)
         {
             x += -Input.GetAxis("Mouse Y") * mouseSens * Time.deltaTime;
             y += Input.GetAxis("Mouse X") * mouseSens * Time.deltaTime;

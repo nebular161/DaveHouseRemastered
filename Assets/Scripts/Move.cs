@@ -26,15 +26,11 @@ public class Move : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
-        if (PlayerManager.transitioning)
-        {
-            transform.position = transPos;
-        }
     }
 
     private void FixedUpdate()
     {
-        if (!PlayerManager.transitioning & !lockPos)
+        if (!lockPos)
         {
             float x = Input.GetAxisRaw("Horizontal");
             float y = Input.GetAxisRaw("Vertical");

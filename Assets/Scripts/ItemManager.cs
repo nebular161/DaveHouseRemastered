@@ -6,6 +6,7 @@ using TMPro;
 
 public class ItemManager : MonoBehaviour
 {
+    public static ItemManager Instance;
     public List<Image> backgrounds;
     public List<Sprite> itemImages;
     public List<Image> itemSlotImages;
@@ -28,6 +29,10 @@ public class ItemManager : MonoBehaviour
 
     Vector3 playerPosition;
 
+    private void Awake()
+    {
+        Instance = this;
+    }
     void Start()
     {
         selectedItem = 0;

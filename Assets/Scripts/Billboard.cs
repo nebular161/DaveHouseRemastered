@@ -6,21 +6,18 @@ public class Billboard : MonoBehaviour
 
     void Start()
     {
-        if (Billboard.cam == null)
-        {
-            cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Transform>();
-        }
+        cam = Camera.main.transform;
         freeRotation.y = 1;
     }
 
     static Transform cam;
-    public Vector3 freeRotation;
+    Vector3 freeRotation;
     Vector3 eangles = Vector3.zero;
 
 
     void LateUpdate()
     {
-        this.transform.LookAt(Billboard.cam);
+        transform.LookAt(cam);
         transform.Rotate(0, 180, 0);
         eangles = transform.eulerAngles;
         eangles.x *= freeRotation.x;

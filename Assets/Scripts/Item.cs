@@ -4,14 +4,13 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
-    ItemManager itmManager;
     Transform player;
 
     public string itemName;
+    public int itemValue;
 
     private void Start()
     {
-        itmManager = GameObject.Find("GameManager").GetComponent<ItemManager>();
         player = GameObject.Find("Player").transform;
         gameObject.name = itemName;
     }
@@ -22,22 +21,10 @@ public class Item : MonoBehaviour
         {
             if(Vector3.Distance(player.position, transform.position) < 10)
             {
-                if(raycastHit.transform.name == "Itm_Cake")
+                if(raycastHit.transform.name == itemName)
                 {
                     Destroy(raycastHit.transform.gameObject);
-                    itmManager.AddItem(1);
-                    return;
-                }
-                else if (raycastHit.transform.name == "Itm_Pie")
-                {
-                    Destroy(raycastHit.transform.gameObject);
-                    itmManager.AddItem(2);
-                    return;
-                }
-                else if (raycastHit.transform.name == "Itm_Locator")
-                {
-                    Destroy(raycastHit.transform.gameObject);
-                    itmManager.AddItem(3);
+                    ItemManager.Instance.AddItem(itemValue);
                     return;
                 }
             }

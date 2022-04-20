@@ -5,23 +5,23 @@ using DG.Tweening;
 
 public class TopSecretElevatorEntrance : MonoBehaviour
 {
-    public ItemManager itmManager;
+    public GameManager gameManager;
     public Material secret;
 
     private void Update()
     {
-        if (itmManager.items[itmManager.selectedItem] == 3)
+        if (ItemManager.Instance.items[ItemManager.Instance.selectedItem] == 3)
         {
             gameObject.GetComponent<MeshRenderer>().material = secret;
         }
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(itmManager.items[itmManager.selectedItem] == 3)
+        if(ItemManager.Instance.items[ItemManager.Instance.selectedItem] == 3)
         {
             if(other.tag == "Player")
             {
-                itmManager.ReplaceItem(itmManager.selectedItem, 0);
+                ItemManager.Instance.ReplaceItem(ItemManager.Instance.selectedItem, 0);
                 transform.DOMoveY(10, 5);
             }
         }

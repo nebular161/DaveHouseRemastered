@@ -10,9 +10,13 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance;
 
     public Animator daveAnim;
     public AudioSource daveAud, music;
+    public AudioClip houseMusic;
+
+    public Collider daveSpeakTrigger;
 
     public Door doorToLockAfterDaveSpeak;
 
@@ -22,16 +26,20 @@ public class GameManager : MonoBehaviour
 
     public float treeMaxX, treeMinX, treeMaxZ, treeMinZ;
 
-    int notebooks;
+    public int notebooks, maxNotebooks;
 
     public TMP_Text notebookText;
 
-    public GameObject daveHappy, daveAngry;
+    public GameObject daveHappy, daveAngry, secretThingOutside;
 
     bool musicStop;
 
     public bool chaseMode;
 
+    private void Awake()
+    {
+        Instance = this;
+    }
     void Start()
     {
         SpawnTrees();
@@ -107,6 +115,7 @@ public class GameManager : MonoBehaviour
         {
             daveHappy.SetActive(false);
             daveAngry.SetActive(true);
+            secretThingOutside.SetActive(false);
             StartCoroutine(StopSchoolMusic());
             chaseMode = true;
         }
@@ -118,5 +127,13 @@ public class GameManager : MonoBehaviour
         music.Stop();
         music.pitch = 1;
         musicStop = false;
+    }
+    public void OnEnteredHouse()
+    {
+        daveAud.Play();
+        music.clip = houseMusic;
+        music.Play();
+        daveSpeakTrigger.enabled = false;
+        DoLockStuff();
     }
 }

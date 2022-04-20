@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Itm_Cake
+  itemValue: 1
 --- !u!136 &3401034130510689147
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -156,7 +157,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df1f42b0937c5a440940efd1fda42ea3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  freeRotation: {x: 0, y: 0, z: 0}
 --- !u!114 &3401034131418575447
 MonoBehaviour:
   m_ObjectHideFlags: 0

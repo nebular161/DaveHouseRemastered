@@ -12,6 +12,7 @@ public class Door : MonoBehaviour
     public bool doorLocked;
     public bool doorOpen;
     public bool lockInfinite;
+    public bool nineDoor;
     public float openingDistance;
     public float lockTime;
     public float openTime;
@@ -57,7 +58,14 @@ public class Door : MonoBehaviour
 
             if (Physics.Raycast(ray, out raycastHit) && ((raycastHit.collider == doorCollider || raycastHit.collider == doorTrigger) & Vector3.Distance(player.position, transform.position) < openingDistance & !doorLocked & !doorOpen))
             {
-                OpenDoor();
+                if(nineDoor && GameManager.Instance.notebooks == GameManager.Instance.maxNotebooks - 1)
+                {
+                    OpenDoor();
+                }
+                else if(!nineDoor)
+                {
+                    OpenDoor();
+                }
             }
         }
     }
@@ -73,10 +81,13 @@ public class Door : MonoBehaviour
     }
     public void LockDoor(float time)
     {
-        doorLocked = true;
-        lockTime = time;
-        inside.material = lockedMaterial;
-        outside.material = lockedMaterial;
+        if(!nineDoor)
+        {
+            doorLocked = true;
+            lockTime = time;
+            inside.material = lockedMaterial;
+            outside.material = lockedMaterial;
+        }
     }
     public void UnlockDoor()
     {

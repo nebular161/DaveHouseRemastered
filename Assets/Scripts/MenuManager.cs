@@ -6,14 +6,15 @@ using UnityEngine.UI;
 using TMPro;
 using System.IO;
 using Newtonsoft.Json;
+using UnityEngine.Audio;
 
 public class MenuManager : MonoBehaviour
 {
     public static MenuManager Instance;
 
     [SerializeField] Menu[] menus;
-
-    public TMP_Text scoreText;
+    public AudioMixer audioMixer;
+    public Slider volumeSlider, sensSlider;
 
     public void Awake()
     {
@@ -29,10 +30,13 @@ public class MenuManager : MonoBehaviour
     private void Start()
     {
         Cursor.lockState = CursorLockMode.None;
-    }
-    private void Update()
-    {
-        
+
+        if(PlayerPrefs.GetFloat("Sensitivity") < 50)
+        {
+            PlayerPrefs.SetFloat("Sensitivity", 100);
+        }
+
+        SetSliderValues();
     }
     public void OpenMenu(string name)
     {
@@ -67,17 +71,18 @@ public class MenuManager : MonoBehaviour
     {
         SceneManager.LoadScene(scene);
     }
-    public void DeleteData()
+    public void ChangeVolume()
     {
-        string path = Path.Combine(Application.persistentDataPath, PlayerPrefs.GetString("PlayerName"));
-        string[] files = Directory.GetFiles(path);
-
-        for (int i = 0; i < files.Length; i++)
-        {
-            File.Delete(files[i]);
-        }
-
-        Directory.Delete(path);
-        LoadScene("NameEnter");
+        audioMixer.SetFloat("Volume", volumeSlider.value);
+        PlayerPrefs.SetFloat("Volume", volumeSlider.value);
+    }
+    public void ChangeSensitivity()
+    {
+        PlayerPrefs.SetFloat("Sensitivity", sensSlider.value);
+    }
+    public void SetSliderValues()
+    {
+        volumeSlider.value = PlayerPrefs.GetFloat("Volume");
+        sensSlider.value = PlayerPrefs.GetFloat("Sensitivity");
     }
 }
