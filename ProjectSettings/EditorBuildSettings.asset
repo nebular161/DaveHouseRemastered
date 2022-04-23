@@ -12,6 +12,6 @@ EditorBuildSettings:
     path: Assets/Scenes/House.unity
     guid: e23573807f321d84fa64396082218508
   - enabled: 1
-    path: Assets/Scenes/FileCorrupt.unity
-    guid: 086d080a054cdcd49bcf58a5d5a3a7fd
+    path: Assets/Scenes/GameOver.unity
+    guid: a38a08d517d97ef48a7cf908cabd470e
   m_configObjects: {}

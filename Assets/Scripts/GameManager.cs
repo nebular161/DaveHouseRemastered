@@ -7,14 +7,15 @@ using Newtonsoft.Json;
 using System.IO;
 using System;
 using UnityEngine.SceneManagement;
+using DG.Tweening;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
     public Animator daveAnim;
-    public AudioSource daveAud, music;
-    public AudioClip houseMusic;
+    public AudioSource daveAud, music, chaseMusic;
+    public AudioClip houseMusic, coinAud;
 
     public Collider daveSpeakTrigger;
 
@@ -22,7 +23,7 @@ public class GameManager : MonoBehaviour
 
     public int treeSpawnCount;
 
-    public GameObject tree, treeParent;
+    public GameObject tree, treeParent, coinThing;
 
     public float treeMaxX, treeMinX, treeMaxZ, treeMinZ;
 
@@ -34,7 +35,9 @@ public class GameManager : MonoBehaviour
 
     bool musicStop;
 
-    public bool chaseMode;
+    public bool chaseMode, finalMode;
+
+    public ItemGuy itemGuy;
 
     private void Awake()
     {
@@ -98,16 +101,20 @@ public class GameManager : MonoBehaviour
 
         if(notebooks == 1)
         {
+            SpawnCoin();
+        }
+        else if(notebooks == 2)
+        {
             StartGame();
         }
-        else if(notebooks == 10)
+        else if(notebooks == maxNotebooks)
         {
-            doorToLockAfterDaveSpeak.UnlockDoor();
+            ActivateEndMode();
         }
     }
     public void UpdatePresents()
     {
-        notebookText.text = "Presents: " + notebooks + "/10";
+        notebookText.text = "Presents: " + notebooks + "/" + maxNotebooks;
     }
     public void StartGame()
     {
@@ -117,8 +124,15 @@ public class GameManager : MonoBehaviour
             daveAngry.SetActive(true);
             secretThingOutside.SetActive(false);
             StartCoroutine(StopSchoolMusic());
+            itemGuy.MoveTime();
             chaseMode = true;
         }
+    }
+    public void SpawnCoin()
+    {
+        coinThing.SetActive(true);
+        daveAud.clip = coinAud;
+        daveAud.Play();
     }
     IEnumerator StopSchoolMusic()
     {
@@ -128,6 +142,15 @@ public class GameManager : MonoBehaviour
         music.pitch = 1;
         musicStop = false;
     }
+    IEnumerator FadeToRed()
+    {
+        yield return new WaitForSeconds(2.79f);
+        Color color = RenderSettings.ambientLight;
+        DOVirtual.Color(color, Color.red, 2.79f, colores =>
+        {
+            RenderSettings.ambientLight = colores;
+        });
+    }
     public void OnEnteredHouse()
     {
         daveAud.Play();
@@ -135,5 +158,12 @@ public class GameManager : MonoBehaviour
         music.Play();
         daveSpeakTrigger.enabled = false;
         DoLockStuff();
+    }
+    public void ActivateEndMode()
+    {
+        finalMode = true;
+        chaseMusic.Play();
+        StartCoroutine(FadeToRed());
+        doorToLockAfterDaveSpeak.UnlockDoor();
     }
 }
