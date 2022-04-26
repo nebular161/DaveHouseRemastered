@@ -8,6 +8,9 @@ TagManager:
   - NPC
   - DoorTrigger
   - WanderPoint
+  - SpawnPoint
+  - Win
+  - Pie
   layers:
   - Default
   - TransparentFX

@@ -5,7 +5,6 @@ using DG.Tweening;
 
 public class TopSecretElevatorEntrance : MonoBehaviour
 {
-    public GameManager gameManager;
     public Material secret;
 
     private void Update()

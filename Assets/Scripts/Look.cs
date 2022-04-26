@@ -13,6 +13,8 @@ public class Look : MonoBehaviour
 
     public bool lockRot;
 
+    float lookBehind;
+
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -23,6 +25,14 @@ public class Look : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(Input.GetKey(KeyCode.Space))
+        {
+            lookBehind = 180;
+        }
+        else
+        {
+            lookBehind = 0;
+        }
         if (!lockRot)
         {
             x += -Input.GetAxis("Mouse Y") * mouseSens * Time.deltaTime;
@@ -34,7 +44,7 @@ public class Look : MonoBehaviour
         x = Mathf.Clamp(x, -90, 90);
 
         //Rotate camera to axis
-        transform.localRotation = Quaternion.Euler(x, 0, 0);
+        transform.localRotation = Quaternion.Euler(x, lookBehind, 0);
         player.transform.localRotation = Quaternion.Euler(0, y, 0);
     }
 }

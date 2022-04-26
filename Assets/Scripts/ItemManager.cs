@@ -22,12 +22,14 @@ public class ItemManager : MonoBehaviour
 
     public Move playerMovement;
 
-    public Transform player, cam;
-    public GameObject pieMovingThing;
+    public Transform player, cam, secretEntrance;
+    public GameObject pieMovingThing, noiseMaker;
 
     public GameObject[] itemDrop;
 
     Vector3 playerPosition;
+
+    public TMP_Text entranceSearcher;
 
     private void Awake()
     {
@@ -51,6 +53,16 @@ public class ItemManager : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.R) && items[selectedItem] != 0 & Time.timeScale != 0)
         {
             Drop();
+        }
+
+        if(items[selectedItem] == 3)
+        {
+            entranceSearcher.gameObject.SetActive(true);
+            entranceSearcher.text = $"DISTANCE_FROM_SECRET: {Vector3.Distance(player.position, secretEntrance.position).ToString("0")} m";
+        }
+        else
+        {
+            entranceSearcher.gameObject.SetActive(false);
         }
 
         playerPosition = player.position;
@@ -121,7 +133,11 @@ public class ItemManager : MonoBehaviour
                 Instantiate(pieMovingThing, playerPosition, cam.rotation);
                 ReplaceItem(selectedItem, 0);
                 break;
-            case 3:
+            case 5:
+                Instantiate(noiseMaker, playerPosition, cam.rotation);
+                ReplaceItem(selectedItem, 0);
+                break;
+            default:
                 Debug.Log("haha this item has no use");
                 break;
         }

@@ -10,13 +10,22 @@ public class Present : MonoBehaviour
 
     public Shader HSVShader;
     public Material presentMaterial;
+
+    PresentSpawn[] presentSpawns;
+    public bool startingPresent;
     void Start()
     {
+        presentSpawns = FindObjectsOfType<PresentSpawn>();
         Material colorFunny = new Material(presentMaterial);
         colorFunny.shader = HSVShader;
         SpriteRenderer sprite = GetComponentInChildren<SpriteRenderer>();
         sprite.material = colorFunny;
         sprite.material.SetVector("_HSVAAdjust", new Vector4(Random.Range(0f, 1f), 0, 0, 0));
+
+        if(!startingPresent)
+        {
+            TeleportPresent();
+        }
     }
 
     // Update is called once per frame
@@ -32,5 +41,19 @@ public class Present : MonoBehaviour
                 gameManager.CollectPresent();
             }
         }
+    }
+    public void TeleportPresent()
+    {
+        int goTo = Random.Range(0, presentSpawns.Length - 1);
+        if(presentSpawns[goTo].taken)
+        {
+            TeleportPresent();
+            return;
+        }
+        else
+        {
+            presentSpawns[goTo].taken = true;
+        }
+        transform.position = presentSpawns[goTo].transform.position;
     }
 }

@@ -4,15 +4,21 @@ using UnityEngine;
 
 public class VendingMachine : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public int item;
+    public Collider player;
+    public bool mysteryItem;
+    private void OnTriggerEnter(Collider other)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if(other == player)
+        {
+            if(ItemManager.Instance.items[ItemManager.Instance.selectedItem] == 4)
+            {
+                if (mysteryItem)
+                {
+                    item = Random.Range(1, 6);
+                }
+                ItemManager.Instance.ReplaceItem(ItemManager.Instance.selectedItem, item);
+            }
+        }
     }
 }

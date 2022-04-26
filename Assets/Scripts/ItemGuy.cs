@@ -39,10 +39,13 @@ public class ItemGuy : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        soundPlayer.clip = giveSounds[Random.Range(0, giveSounds.Length)];
-        soundPlayer.Play();
-        ItemManager.Instance.ReplaceItem(ItemManager.Instance.selectedItem, Random.Range(1, 5));
-        transform.position = new Vector3(transform.position.x, -45, transform.position.z);
-        alreadyPlayedAttentionGrabber = false;
+        if(other.CompareTag("Player"))
+        {
+            soundPlayer.clip = giveSounds[Random.Range(0, giveSounds.Length)];
+            soundPlayer.Play();
+            ItemManager.Instance.ReplaceItem(ItemManager.Instance.selectedItem, Random.Range(1, 6));
+            transform.position = new Vector3(transform.position.x, -45, transform.position.z);
+            alreadyPlayedAttentionGrabber = false;
+        }
     }
 }

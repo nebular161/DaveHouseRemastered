@@ -6,6 +6,8 @@ public class WanderPoints : MonoBehaviour
 {
     public static WanderPoints Instance;
     Transform[] wanderPoints;
+
+    public GameObject coin;
     private void Awake()
     {
         Instance = this;
@@ -13,6 +15,18 @@ public class WanderPoints : MonoBehaviour
     private void Start()
     {
         wanderPoints = GetComponentsInChildren<Transform>();
+
+        int chance;
+        for (int i = 0; i < wanderPoints.Length; i++)
+        {
+            chance = Random.Range(0, 4);
+            if(chance == 1)
+            {
+                Vector3 newPos = wanderPoints[i].position;
+                newPos.y = 5;
+                Instantiate(ItemManager.Instance.itemDrop[Random.Range(0, ItemManager.Instance.itemDrop.Length - 1)], newPos, coin.transform.rotation, wanderPoints[i]);
+            }
+        }
     }
     public Transform GetWanderPoint()
     {

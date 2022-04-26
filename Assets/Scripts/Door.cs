@@ -23,6 +23,8 @@ public class Door : MonoBehaviour
 
     public AudioClip doorOpenAud, doorCloseAud;
 
+    public Dave dave;
+
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
@@ -58,7 +60,11 @@ public class Door : MonoBehaviour
 
             if (Physics.Raycast(ray, out raycastHit) && ((raycastHit.collider == doorCollider || raycastHit.collider == doorTrigger) & Vector3.Distance(player.position, transform.position) < openingDistance & !doorLocked & !doorOpen))
             {
-                if(nineDoor && GameManager.Instance.notebooks == GameManager.Instance.maxNotebooks - 1)
+                if(dave.isActiveAndEnabled)
+                {
+                    dave.Hear(transform.position, 1);
+                }
+                if(nineDoor && GameManager.Instance.notebooks >= GameManager.Instance.maxNotebooks - 1)
                 {
                     OpenDoor();
                 }
