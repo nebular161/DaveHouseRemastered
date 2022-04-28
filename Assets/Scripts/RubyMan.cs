@@ -17,8 +17,11 @@ public class RubyMan : MonoBehaviour
     public AudioClip intro, loop;
     public Sprite angryRuby;
     public GameObject sprite;
+
+    Color intial;
     void Start()
     {
+        intial = RenderSettings.ambientLight;
         audioSource = GetComponent<AudioSource>();
         agent = GetComponent<NavMeshAgent>();
         sprite.gameObject.SetActive(false);
@@ -28,9 +31,8 @@ public class RubyMan : MonoBehaviour
     {
         if(GameManager.Instance.notebooks >= 2 || debug)
         {
-            Vector3 direction = player.position - transform.position;
             RaycastHit raycastHit;
-            if(Physics.Raycast(transform.position + Vector3.up * 2f, direction, out raycastHit) & raycastHit.transform == player & spriteRenderer.isVisible & sprite.activeSelf)
+            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out raycastHit) & raycastHit.transform == transform & spriteRenderer.isVisible & sprite.activeSelf)
             {
                 gettingAngry = true;
             }
@@ -73,6 +75,7 @@ public class RubyMan : MonoBehaviour
         }
         else
         {
+            RenderSettings.ambientLight = new Color(0.6f, 0.117647059f, 0.2f);
             agent.speed += 60f * Time.deltaTime;
             TargetPlayer();
             if(!audioSource.isPlaying)
@@ -93,6 +96,20 @@ public class RubyMan : MonoBehaviour
             if(flee)
             {
                 forceShowTime = 3;
+            }
+        }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.transform == player)
+        {
+            if(GameManager.Instance.finalMode)
+            {
+                RenderSettings.ambientLight = Color.red;
+            }
+            else
+            {
+                RenderSettings.ambientLight = intial;
             }
         }
     }

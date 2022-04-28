@@ -150,6 +150,7 @@ public class GameManager : MonoBehaviour
         {
             RenderSettings.ambientLight = colores;
         });
+        finalMode = true;
     }
     public void OnEnteredHouse()
     {
@@ -161,7 +162,6 @@ public class GameManager : MonoBehaviour
     }
     public void ActivateEndMode()
     {
-        finalMode = true;
         chaseMusic.Play();
         StartCoroutine(FadeToRed());
         doorToLockAfterDaveSpeak.UnlockDoor();
