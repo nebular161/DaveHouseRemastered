@@ -43,6 +43,10 @@ public class ItemGuy : MonoBehaviour
         {
             soundPlayer.clip = giveSounds[Random.Range(0, giveSounds.Length)];
             soundPlayer.Play();
+            if(ItemManager.Instance.selectedItem != 0)
+            {
+                ItemManager.Instance.Drop();
+            }
             ItemManager.Instance.ReplaceItem(ItemManager.Instance.selectedItem, Random.Range(1, 6));
             transform.position = new Vector3(transform.position.x, -45, transform.position.z);
             alreadyPlayedAttentionGrabber = false;

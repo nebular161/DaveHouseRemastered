@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
     public bool chaseMode, finalMode;
 
     public ItemGuy itemGuy;
-
+    public GameObject bayerMan;
     private void Awake()
     {
         Instance = this;

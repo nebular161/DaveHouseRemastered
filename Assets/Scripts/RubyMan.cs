@@ -32,7 +32,7 @@ public class RubyMan : MonoBehaviour
         if(GameManager.Instance.notebooks >= 2 || debug)
         {
             RaycastHit raycastHit;
-            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out raycastHit) & raycastHit.transform == transform & spriteRenderer.isVisible & sprite.activeSelf)
+            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out raycastHit) & raycastHit.transform == transform & GameManager.Instance.notebooks >= 2 & sprite.activeSelf)
             {
                 gettingAngry = true;
             }
@@ -51,7 +51,7 @@ public class RubyMan : MonoBehaviour
         if(gettingAngry)
         {
             anger += Time.deltaTime;
-            if(anger >= 1 && !angry)
+            if(anger >= 0.75f && !angry)
             {
                 angry = true;
                 audioSource.PlayOneShot(intro);
@@ -64,7 +64,7 @@ public class RubyMan : MonoBehaviour
         }
         if(!angry)
         {
-            if(((transform.position - agent.destination).magnitude <= 20 & (transform.position - player.position).magnitude >= 60) || forceShowTime > 0)
+            if (forceShowTime > 0 && GameManager.Instance.notebooks >= 2)
             {
                 spriteRenderer.gameObject.SetActive(true);
             }
@@ -76,7 +76,7 @@ public class RubyMan : MonoBehaviour
         else
         {
             RenderSettings.ambientLight = new Color(0.6f, 0.117647059f, 0.2f);
-            agent.speed += 60f * Time.deltaTime;
+            agent.speed += 30f * Time.deltaTime;
             TargetPlayer();
             if(!audioSource.isPlaying)
             {
@@ -88,22 +88,19 @@ public class RubyMan : MonoBehaviour
     {
         agent.SetDestination(player.position);
     }
-    public void DoSometingLocationRelated(Vector3 location, bool flee)
+    public void DoSometingLocationRelated(Vector3 location)
     {
         if(!angry & agent.isActiveAndEnabled)
         {
             agent.SetDestination(location);
-            if(flee)
-            {
-                forceShowTime = 3;
-            }
+            forceShowTime = 3;
         }
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.transform == player)
+        if (angry && other.transform == player)
         {
-            if(GameManager.Instance.finalMode)
+            if (GameManager.Instance.finalMode)
             {
                 RenderSettings.ambientLight = Color.red;
             }
@@ -111,6 +108,9 @@ public class RubyMan : MonoBehaviour
             {
                 RenderSettings.ambientLight = intial;
             }
+            Transform playerWarp = WanderPoints.Instance.GetWanderPoint();
+            player.position = new Vector3(playerWarp.position.x, player.position.y, playerWarp.position.z);
+            gameObject.SetActive(false);
         }
     }
 }

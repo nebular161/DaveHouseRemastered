@@ -12,14 +12,14 @@ public class RubyTrigger : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         {
-            rubyMan.DoSometingLocationRelated(go.position, false);
+            rubyMan.DoSometingLocationRelated(go.position);
         }
     }
     private void OnTriggerExit(Collider other)
     {
         if(other.CompareTag("Player"))
         {
-            rubyMan.DoSometingLocationRelated(flee.position, true);
+            rubyMan.DoSometingLocationRelated(flee.position);
         }
     }
 }

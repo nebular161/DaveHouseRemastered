@@ -31,38 +31,31 @@ public class Dave : MonoBehaviour
     {
         Vector3 direction = player.position - transform.position;
         RaycastHit raycastHit;
-        if(!GameManager.Instance.finalMode)
+        if (Physics.Raycast(transform.position, direction, out raycastHit) & raycastHit.transform.CompareTag("Player"))
         {
-            if (Physics.Raycast(transform.position, direction, out raycastHit) & raycastHit.transform.CompareTag("Player"))
+            if (!playerSeen && !daveAudio.isPlaying)
             {
-                if (!playerSeen && !daveAudio.isPlaying)
-                {
-                    daveAudio.PlayOneShot(foundClips[Random.Range(0, foundClips.Length - 1)]);
-                }
-                playerSeen = true;
-                GoToPlayer();
-                currentSpeed = fastSpeed;
-                return;
+                daveAudio.PlayOneShot(foundClips[Random.Range(0, foundClips.Length - 1)]);
             }
-            currentSpeed = normalSpeed;
-            if (playerSeen & coolDown <= 0)
-            {
-                if (!daveAudio.isPlaying)
-                {
-                    daveAudio.PlayOneShot(lostClips[Random.Range(0, lostClips.Length - 1)]);
-                }
-                playerSeen = false;
-                Wander();
-                return;
-            }
-            if (agent.velocity.magnitude <= 1 & coolDown <= 0 & (transform.position - agent.destination).magnitude < 5)
-            {
-                Wander();
-            }
+            playerSeen = true;
+            GoToPlayer();
+            currentSpeed = fastSpeed;
+            return;
         }
-        else
+        currentSpeed = normalSpeed;
+        if (playerSeen & coolDown <= 0)
         {
-            agent.SetDestination(player.position);
+            if (!daveAudio.isPlaying)
+            {
+                daveAudio.PlayOneShot(lostClips[Random.Range(0, lostClips.Length - 1)]);
+            }
+            playerSeen = false;
+            Wander();
+            return;
+        }
+        if (agent.velocity.magnitude <= 1 & coolDown <= 0 & (transform.position - agent.destination).magnitude < 5)
+        {
+            Wander();
         }
     }
 
