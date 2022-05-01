@@ -39,6 +39,8 @@ public class GameManager : MonoBehaviour
 
     public ItemGuy itemGuy;
     public GameObject bayerMan;
+
+    public Dave dave;
     private void Awake()
     {
         Instance = this;
@@ -110,6 +112,11 @@ public class GameManager : MonoBehaviour
         else if(notebooks == maxNotebooks)
         {
             ActivateEndMode();
+        }
+        if (notebooks >= 2 && dave.isActiveAndEnabled)
+        {
+            dave.agent.acceleration += 0.5f;
+            dave.normalSpeed += 0.5f;
         }
     }
     public void UpdatePresents()

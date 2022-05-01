@@ -6,8 +6,6 @@ public class WanderPoints : MonoBehaviour
 {
     public static WanderPoints Instance;
     Transform[] wanderPoints;
-
-    public GameObject coin;
     private void Awake()
     {
         Instance = this;
@@ -24,12 +22,12 @@ public class WanderPoints : MonoBehaviour
             {
                 Vector3 newPos = wanderPoints[i].position;
                 newPos.y = 5;
-                Instantiate(ItemManager.Instance.itemDrop[Random.Range(0, ItemManager.Instance.itemDrop.Length - 1)], newPos, coin.transform.rotation, wanderPoints[i]);
+                Instantiate(ItemManager.Instance.itemDrop[Random.Range(1, ItemManager.Instance.itemDrop.Length - 1)], newPos, wanderPoints[i].rotation, wanderPoints[i]);
             }
         }
     }
     public Transform GetWanderPoint()
     {
-        return wanderPoints[Random.Range(0, wanderPoints.Length)];
+        return wanderPoints[Random.Range(1, wanderPoints.Length)];
     }
 }

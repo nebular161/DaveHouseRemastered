@@ -31,8 +31,9 @@ public class RubyMan : MonoBehaviour
     {
         if(GameManager.Instance.notebooks >= 2 || debug)
         {
+            Vector3 direction = transform.position - player.position;
             RaycastHit raycastHit;
-            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out raycastHit) & raycastHit.transform == transform & GameManager.Instance.notebooks >= 2 & sprite.activeSelf)
+            if (Physics.Raycast(transform.position + Vector3.up * 2f, direction, out raycastHit) & raycastHit.transform == transform & GameManager.Instance.notebooks >= 2 & sprite.activeSelf)
             {
                 gettingAngry = true;
             }

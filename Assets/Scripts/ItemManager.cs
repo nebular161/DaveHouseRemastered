@@ -23,13 +23,15 @@ public class ItemManager : MonoBehaviour
     public Move playerMovement;
 
     public Transform player, cam, secretEntrance;
-    public GameObject pieMovingThing, noiseMaker;
+    public GameObject pieMovingThing;
 
     public GameObject[] itemDrop;
 
     Vector3 playerPosition;
 
     public TMP_Text entranceSearcher;
+
+    public Dave dave;
 
     private void Awake()
     {
@@ -134,8 +136,13 @@ public class ItemManager : MonoBehaviour
                 ReplaceItem(selectedItem, 0);
                 break;
             case 5:
-                Instantiate(noiseMaker, playerPosition, cam.rotation);
-                ReplaceItem(selectedItem, 0);
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit daveHit;
+                if(Physics.Raycast(ray, out daveHit) && daveHit.transform == dave.transform && Vector3.Distance(dave.transform.position, player.position) <= 10)
+                {
+                    dave.KnifeAttack();
+                    ReplaceItem(selectedItem, 0);
+                }
                 break;
             default:
                 Debug.Log("haha this item has no use");
