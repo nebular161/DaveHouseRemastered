@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DedicatedServer;
 using TMPro;
 using Newtonsoft.Json;
 using System.IO;
@@ -116,7 +115,8 @@ public class GameManager : MonoBehaviour
         if (notebooks >= 2 && dave.isActiveAndEnabled)
         {
             dave.agent.acceleration += 0.5f;
-            dave.normalSpeed += 0.5f;
+            dave.normalSpeed += 0.1f;
+            dave.turnSpeed += 25;
         }
     }
     public void UpdatePresents()

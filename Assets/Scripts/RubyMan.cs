@@ -19,6 +19,8 @@ public class RubyMan : MonoBehaviour
     public GameObject sprite;
 
     Color intial;
+
+    public Look look;
     void Start()
     {
         intial = RenderSettings.ambientLight;
@@ -31,9 +33,8 @@ public class RubyMan : MonoBehaviour
     {
         if(GameManager.Instance.notebooks >= 2 || debug)
         {
-            Vector3 direction = transform.position - player.position;
             RaycastHit raycastHit;
-            if (Physics.Raycast(transform.position + Vector3.up * 2f, direction, out raycastHit) & raycastHit.transform == transform & GameManager.Instance.notebooks >= 2 & sprite.activeSelf)
+            if (Physics.Linecast(transform.position, player.position, out raycastHit) && raycastHit.transform.CompareTag("Player") && sprite.activeSelf && !look.lookingBehind)
             {
                 gettingAngry = true;
             }
@@ -52,7 +53,7 @@ public class RubyMan : MonoBehaviour
         if(gettingAngry)
         {
             anger += Time.deltaTime;
-            if(anger >= 0.75f && !angry)
+            if(anger >= 0.3f && !angry)
             {
                 angry = true;
                 audioSource.PlayOneShot(intro);
@@ -65,7 +66,7 @@ public class RubyMan : MonoBehaviour
         }
         if(!angry)
         {
-            if (forceShowTime > 0 && GameManager.Instance.notebooks >= 2)
+            if (forceShowTime > 0 && GameManager.Instance.notebooks >= 2 || debug)
             {
                 spriteRenderer.gameObject.SetActive(true);
             }
@@ -76,6 +77,7 @@ public class RubyMan : MonoBehaviour
         }
         else
         {
+            RenderSettings.fog = true;
             RenderSettings.ambientLight = new Color(0.6f, 0.117647059f, 0.2f);
             agent.speed += 30f * Time.deltaTime;
             TargetPlayer();
@@ -109,6 +111,7 @@ public class RubyMan : MonoBehaviour
             {
                 RenderSettings.ambientLight = intial;
             }
+            RenderSettings.fog = false;
             Transform playerWarp = WanderPoints.Instance.GetWanderPoint();
             player.position = new Vector3(playerWarp.position.x, player.position.y, playerWarp.position.z);
             gameObject.SetActive(false);

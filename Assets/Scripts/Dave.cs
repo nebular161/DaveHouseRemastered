@@ -26,7 +26,7 @@ public class Dave : MonoBehaviour
     {
         Vector3 direction = player.position - transform.position;
         RaycastHit raycastHit;
-        if (Physics.Raycast(transform.position + Vector3.up * 2f, direction, out raycastHit) & raycastHit.transform.CompareTag("Player"))
+        if (Physics.Raycast(transform.position, direction, out raycastHit) & raycastHit.transform.CompareTag("Player"))
         {
             if (!playerSeen && !daveAudio.isPlaying)
             {
@@ -41,15 +41,7 @@ public class Dave : MonoBehaviour
         {
             if (!daveAudio.isPlaying)
             {
-                int secrete = Random.Range(0, 333);
-                if (secrete == 299)
-                {
-                    daveAudio.PlayOneShot(secret);
-                }
-                else
-                {
-                    daveAudio.PlayOneShot(lostClips[Random.Range(0, lostClips.Length - 1)]);
-                }
+                daveAudio.PlayOneShot(lostClips[Random.Range(0, lostClips.Length - 1)]);
             }
             playerSeen = false;
             return;
@@ -105,8 +97,7 @@ public class Dave : MonoBehaviour
         {
             daveAudio.Stop();
         }
-        daveAudio.clip = beenHit;
-        daveAudio.Play();
+        daveAudio.PlayOneShot(beenHit);
     }
     public void KnifeAttack()
     {
@@ -122,8 +113,15 @@ public class Dave : MonoBehaviour
         {
             daveAudio.Stop();
         }
-        daveAudio.clip = knife;
-        daveAudio.Play();
+        int secrete = Random.Range(0, 69);
+        if (secrete == 44)
+        {
+            daveAudio.PlayOneShot(secret);
+        }
+        else
+        {
+            daveAudio.PlayOneShot(knife);
+        }
     }
     private void OnTriggerEnter(Collider other)
     {

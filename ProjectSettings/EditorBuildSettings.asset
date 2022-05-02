@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu.unity
     guid: bec9239d2d803414d9f759b0d3513585
   - enabled: 1
+    path: Assets/Scenes/GameJoltSignIn.unity
+    guid: b7bb5ee99bc243240a80da24c8fccfc5
+  - enabled: 1
     path: Assets/Scenes/House.unity
     guid: e23573807f321d84fa64396082218508
   - enabled: 1

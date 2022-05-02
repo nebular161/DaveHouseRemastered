@@ -56,7 +56,6 @@ public class Move : MonoBehaviour
             Vector3 targetVelocity = transform.TransformDirection(direction) * adjustedSpeed * Time.deltaTime;
             targetVelocity.y = rb.velocity.y;
             rb.velocity = targetVelocity;
-
             //Stamina bar (referenced from baldi)
             if (isSprinting)
             {

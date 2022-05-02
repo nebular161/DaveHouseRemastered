@@ -15,6 +15,8 @@ public class Look : MonoBehaviour
 
     float lookBehind;
 
+    public bool lookingBehind;
+
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -28,10 +30,12 @@ public class Look : MonoBehaviour
         if(Input.GetKey(KeyCode.Space))
         {
             lookBehind = 180;
+            lookingBehind = true;
         }
         else
         {
             lookBehind = 0;
+            lookingBehind = false;
         }
         if (!lockRot)
         {
