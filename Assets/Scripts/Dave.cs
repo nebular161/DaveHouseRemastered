@@ -17,7 +17,7 @@ public class Dave : MonoBehaviour
     public float turnSpeed, currentPriority;
     public float normalSpeed, fastSpeed, currentSpeed;
 
-    float spinningTime = 0, piedTime;
+    [SerializeField] float spinningTime, piedTime;
     public bool playerSeen, pied, spinning;
 
     public AudioSource wheelchairAudio;
@@ -98,6 +98,7 @@ public class Dave : MonoBehaviour
             daveAudio.Stop();
         }
         daveAudio.PlayOneShot(beenHit);
+        GameManager.Instance.UnlockTrophy(162157);
     }
     public void KnifeAttack()
     {
@@ -122,6 +123,7 @@ public class Dave : MonoBehaviour
         {
             daveAudio.PlayOneShot(knife);
         }
+        GameManager.Instance.UnlockTrophy(162159);
     }
     private void OnTriggerEnter(Collider other)
     {

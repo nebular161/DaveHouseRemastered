@@ -7,6 +7,8 @@ using System.IO;
 using System;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
+using GameJolt.API;
+using GameJolt.API.Objects;
 
 public class GameManager : MonoBehaviour
 {
@@ -166,11 +168,31 @@ public class GameManager : MonoBehaviour
         music.Play();
         daveSpeakTrigger.enabled = false;
         DoLockStuff();
+        UnlockTrophy(162157);
     }
     public void ActivateEndMode()
     {
         chaseMusic.Play();
         StartCoroutine(FadeToRed());
         doorToLockAfterDaveSpeak.UnlockDoor();
+    }
+    public void UnlockTrophy(int id)
+    {
+        if(GameJoltAPI.Instance.CurrentUser != null)
+        {
+            Trophies.Get(id, (Trophy lol) =>
+            {
+                if(!lol.Unlocked)
+                {
+                    Trophies.Unlock(id, (bool success) =>
+                    {
+                        if (success)
+                        {
+                            Debug.Log("Trophy unlocked");
+                        }
+                    });
+                }
+            });
+        }
     }
 }
