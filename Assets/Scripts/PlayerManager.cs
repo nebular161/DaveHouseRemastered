@@ -35,12 +35,14 @@ public class PlayerManager : MonoBehaviour
         {
             if(!beenJumpscared)
             {
+                GameManager.Instance.UnlockTrophy(162193);
                 Jumpscared();
             }
         }
         if(other == winLine && GameManager.Instance.finalMode)
         {
             PlayerPrefs.SetInt("HasWon", 1);
+            GameManager.Instance.UnlockTrophy(162161);
             SceneManager.LoadScene("Win");
         }
     }

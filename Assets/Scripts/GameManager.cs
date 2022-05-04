@@ -50,14 +50,17 @@ public class GameManager : MonoBehaviour
     {
         SpawnTrees();
         UpdatePresents();
+
+        if(DateTime.Now.Hour == 3)
+        {
+            Debug.Log("oh my gee its 3am");
+            UnlockTrophy(162191);
+            SceneManager.LoadScene("Secret");
+        }
     }
     void Update()
     {
         // debug bitch
-        if(Input.GetKeyDown(KeyCode.F5))
-        {
-            EndGame();
-        }
 
         if(daveAud.isPlaying)
         {

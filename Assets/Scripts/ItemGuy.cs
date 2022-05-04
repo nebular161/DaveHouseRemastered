@@ -41,6 +41,7 @@ public class ItemGuy : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         {
+            GameManager.Instance.UnlockTrophy(162194);
             soundPlayer.clip = giveSounds[Random.Range(0, giveSounds.Length)];
             soundPlayer.Play();
             if(ItemManager.Instance.selectedItem != 0)

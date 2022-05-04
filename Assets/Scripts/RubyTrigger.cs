@@ -13,6 +13,7 @@ public class RubyTrigger : MonoBehaviour
         if(other.CompareTag("Player"))
         {
             rubyMan.DoSometingLocationRelated(go.position);
+            rubyMan.playerInTrigger = true;
         }
     }
     private void OnTriggerExit(Collider other)
@@ -20,6 +21,7 @@ public class RubyTrigger : MonoBehaviour
         if(other.CompareTag("Player"))
         {
             rubyMan.DoSometingLocationRelated(flee.position);
+            rubyMan.playerInTrigger = false;
         }
     }
 }

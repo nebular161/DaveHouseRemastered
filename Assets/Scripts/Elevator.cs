@@ -5,6 +5,8 @@ using DG.Tweening;
 
 public class Elevator : MonoBehaviour
 {
+    int notebooksUponTouch;
+    public MeshCollider thing;
     private void OnTriggerEnter(Collider other)
     {
         if(transform.position.y == 10)
@@ -19,6 +21,7 @@ public class Elevator : MonoBehaviour
             if(other.tag == "Player")
             {
                 transform.DOMoveY(10, 30);
+                thing.enabled = false;
             }
         }
     }

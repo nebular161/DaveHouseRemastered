@@ -28,7 +28,7 @@ public class MenuManager : MonoBehaviour
         }
     }
     private void Start()
-    {
+    { 
         Cursor.lockState = CursorLockMode.None;
 
         if(PlayerPrefs.GetFloat("Sensitivity") < 50)
@@ -84,5 +84,9 @@ public class MenuManager : MonoBehaviour
     {
         volumeSlider.value = PlayerPrefs.GetFloat("Volume");
         sensSlider.value = PlayerPrefs.GetFloat("Sensitivity");
+    }
+    public void ExitGame()
+    {
+        Application.Quit();
     }
 }

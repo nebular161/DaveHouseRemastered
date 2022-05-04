@@ -129,6 +129,7 @@ public class ItemManager : MonoBehaviour
         {
             case 1:
                 playerMovement.stamina = 250;
+                GameManager.Instance.UnlockTrophy(162186);
                 ReplaceItem(selectedItem, 0);
                 break;
             case 2:

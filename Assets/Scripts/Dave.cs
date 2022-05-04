@@ -22,6 +22,8 @@ public class Dave : MonoBehaviour
 
     public AudioSource wheelchairAudio;
 
+    [SerializeField] int times = 0;
+
     private void FixedUpdate()
     {
         Vector3 direction = player.position - transform.position;
@@ -67,6 +69,7 @@ public class Dave : MonoBehaviour
             }
             pied = false;
             spinning = false;
+            times = 0;
         }
         else if(spinningTime > 0)
         {
@@ -92,6 +95,11 @@ public class Dave : MonoBehaviour
         else
         {
             piedTime += 5;
+        }
+        times++;
+        if(times == 3)
+        {
+            GameManager.Instance.UnlockTrophy(162189);
         }
         if (daveAudio.isPlaying)
         {

@@ -9,7 +9,7 @@ public class RubyMan : MonoBehaviour
     public Transform player;
     [SerializeField] float forceShowTime, anger;
 
-    public bool gettingAngry, angry, debug;
+    public bool gettingAngry, angry, debug, playerInTrigger;
 
     AudioSource audioSource;
     public SpriteRenderer spriteRenderer;
@@ -114,6 +114,7 @@ public class RubyMan : MonoBehaviour
             RenderSettings.fog = false;
             Transform playerWarp = WanderPoints.Instance.GetWanderPoint();
             player.position = new Vector3(playerWarp.position.x, player.position.y, playerWarp.position.z);
+            GameManager.Instance.UnlockTrophy(162188);
             gameObject.SetActive(false);
         }
     }
