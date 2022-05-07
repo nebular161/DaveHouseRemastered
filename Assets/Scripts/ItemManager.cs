@@ -32,6 +32,10 @@ public class ItemManager : MonoBehaviour
     public TMP_Text entranceSearcher;
 
     public Dave dave;
+    public AudioSource teleporterAudio;
+    public AudioClip bew;
+
+    int timesToTeleport = 10;
 
     private void Awake()
     {
@@ -88,6 +92,31 @@ public class ItemManager : MonoBehaviour
             lastOne = selectedItem;
             UpdateName();
         }
+
+        if(Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            backgrounds[lastOne].color = Color.white;
+            selectedItem = 0;
+            backgrounds[selectedItem].color = Color.red;
+            lastOne = selectedItem;
+            UpdateName();
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            backgrounds[lastOne].color = Color.white;
+            selectedItem = 1;
+            backgrounds[selectedItem].color = Color.red;
+            lastOne = selectedItem;
+            UpdateName();
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            backgrounds[lastOne].color = Color.white;
+            selectedItem = 2;
+            backgrounds[selectedItem].color = Color.red;
+            lastOne = selectedItem;
+            UpdateName();
+        }
     }
     public void UpdateName()
     {
@@ -95,15 +124,20 @@ public class ItemManager : MonoBehaviour
     }
     public void AddItem(int item)
     {
-        if(items[selectedItem] != 0)
+        bool hasFoundItemSlot = false;
+        for (int i = 0; i < items.Length; i++)
+        {
+            if(items[i] == 0 && !hasFoundItemSlot)
+            {
+                items[i] = item;
+                itemSlotImages[i].sprite = itemImages[item];
+                hasFoundItemSlot = true;
+            }
+        }
+        if (!hasFoundItemSlot)
         {
             Drop();
             ReplaceItem(selectedItem, item);
-        }
-        else
-        {
-            items[selectedItem] = item;
-            itemSlotImages[selectedItem].sprite = itemImages[item];
         }
         UpdateName();
     }
@@ -133,21 +167,42 @@ public class ItemManager : MonoBehaviour
                 ReplaceItem(selectedItem, 0);
                 break;
             case 2:
-                Instantiate(pieMovingThing, playerPosition, cam.rotation);
+                Instantiate(pieMovingThing, cam.position, cam.rotation);
                 ReplaceItem(selectedItem, 0);
                 break;
             case 5:
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit daveHit;
-                if(Physics.Raycast(ray, out daveHit) && daveHit.transform == dave.transform && Vector3.Distance(dave.transform.position, player.position) <= 10)
+                if(Physics.Raycast(ray, out daveHit) && daveHit.transform == dave.transform && Vector3.Distance(dave.transform.position, player.position) <= 15)
                 {
                     dave.KnifeAttack();
                     ReplaceItem(selectedItem, 0);
                 }
                 break;
+            case 6:
+                timesToTeleport = 10;
+                StartCoroutine(TeleportSequence());
+                ReplaceItem(selectedItem, 0);
+                break;
             default:
                 Debug.Log("haha this item has no use");
                 break;
+        }
+    }
+    public void TeleportPlayer()
+    {
+        Transform playerWarp = WanderPoints.Instance.GetWanderPoint();
+        player.position = new Vector3(playerWarp.position.x, player.position.y, playerWarp.position.z);
+        teleporterAudio.PlayOneShot(bew);
+    }
+    IEnumerator TeleportSequence()
+    {
+        if(timesToTeleport >= 0)
+        {
+            TeleportPlayer();
+            timesToTeleport--;
+            yield return new WaitForSeconds(0.4f);
+            StartCoroutine(TeleportSequence());
         }
     }
 }

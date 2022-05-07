@@ -18,7 +18,7 @@ public class WanderPoints : MonoBehaviour
         for (int i = 0; i < wanderPoints.Length; i++)
         {
             chance = Random.Range(0, 4);
-            if(chance == 1)
+            if(chance == 1 && i != 0)
             {
                 Vector3 newPos = wanderPoints[i].position;
                 newPos.y = 5;

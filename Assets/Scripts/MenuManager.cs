@@ -69,6 +69,7 @@ public class MenuManager : MonoBehaviour
     }
     public void LoadScene(string scene)
     {
+        OpenMenu("Loading");
         SceneManager.LoadScene(scene);
     }
     public void ChangeVolume()
@@ -88,5 +89,9 @@ public class MenuManager : MonoBehaviour
     public void ExitGame()
     {
         Application.Quit();
+    }
+    public void SetGameMode(string gamemode)
+    {
+        PlayerPrefs.SetString("Gamemode", gamemode);
     }
 }

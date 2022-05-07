@@ -15,7 +15,7 @@ public class VendingMachine : MonoBehaviour
             {
                 if (mysteryItem)
                 {
-                    item = Random.Range(1, 6);
+                    item = Random.Range(1, 7);
                 }
                 ItemManager.Instance.ReplaceItem(ItemManager.Instance.selectedItem, item);
             }

@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class PlayerManager : MonoBehaviour
 {
-    public Collider daveSpeakTrigger, daveAngry, winLine;
+    public Collider daveSpeakTrigger, daveAngry, winLine, stopwatch;
     public bool beenJumpscared;
     public GameObject daveJumpscare, angryDave;
 
@@ -31,8 +31,9 @@ public class PlayerManager : MonoBehaviour
         {
             GameManager.Instance.OnEnteredHouse();
         }
-        if (other == daveAngry && !dave.pied && !dave.spinning)
+        if (other == daveAngry && !dave.pied && !dave.spinning || other == stopwatch)
         {
+            stopwatch.gameObject.SetActive(false);
             if(!beenJumpscared)
             {
                 GameManager.Instance.UnlockTrophy(162193);

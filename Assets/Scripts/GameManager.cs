@@ -42,12 +42,22 @@ public class GameManager : MonoBehaviour
     public GameObject bayerMan;
 
     public Dave dave;
+    float timeThing;
+    string gamemode;
+
+    float timePassed = 0;
+
+    public TMP_Text timeText;
+    public GameObject stopwatchThingies, stopwatchHorrorCharacter666;
+
+    public float maxTimedModeTime;
     private void Awake()
     {
         Instance = this;
     }
     void Start()
     {
+        timeThing = maxTimedModeTime;
         SpawnTrees();
         UpdatePresents();
 
@@ -56,6 +66,11 @@ public class GameManager : MonoBehaviour
             Debug.Log("oh my gee its 3am");
             UnlockTrophy(162191);
             SceneManager.LoadScene("Secret");
+        }
+        gamemode = PlayerPrefs.GetString("Gamemode");
+        if(gamemode == "Timed")
+        {
+            stopwatchThingies.SetActive(true);
         }
     }
     void Update()
@@ -74,6 +89,17 @@ public class GameManager : MonoBehaviour
         if(musicStop)
         {
             music.pitch -= 0.25f * Time.deltaTime;
+        }
+        if(gamemode == "Timed" && timeThing >= 0)
+        {
+            timeThing -= Time.deltaTime;
+            timePassed += Time.deltaTime;
+            timeText.text = timeThing.ToString("0");
+        }
+        if(timeThing <= 0)
+        {
+            timeText.text = "Times Up!!!";
+            stopwatchHorrorCharacter666.SetActive(true);
         }
     }
     public void EndGame()
@@ -171,7 +197,7 @@ public class GameManager : MonoBehaviour
         music.Play();
         daveSpeakTrigger.enabled = false;
         DoLockStuff();
-        UnlockTrophy(162157);
+        UnlockTrophy(162151);
     }
     public void ActivateEndMode()
     {

@@ -13,7 +13,7 @@ public class Elevator : MonoBehaviour
         {
             if(other.tag == "Player")
             {
-                transform.DOMoveY(120, 20);
+                transform.DOMoveY(120, 30);
             }
         }
         else if(transform.position.y == 120)
