@@ -43,9 +43,9 @@ public class GameManager : MonoBehaviour
 
     public Dave dave;
     float timeThing;
-    string gamemode;
+    public string gamemode;
 
-    float timePassed = 0;
+    public float timePassed = 0;
 
     public TMP_Text timeText;
     public GameObject stopwatchThingies, stopwatchHorrorCharacter666;
@@ -221,6 +221,16 @@ public class GameManager : MonoBehaviour
                         }
                     });
                 }
+            });
+        }
+    }
+    public void SubmitScore(int score, string text, int id, string xtraData)
+    {
+        if(GameJoltAPI.Instance.CurrentUser != null)
+        {
+            Scores.Add(score, text, id, xtraData, (bool success) => {
+
+                Debug.Log($"Score of {score} submitted successfully");
             });
         }
     }

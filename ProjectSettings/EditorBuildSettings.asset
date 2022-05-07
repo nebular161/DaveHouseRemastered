@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Secret.unity
     guid: af9fc33a8050f194fa1bab64a40f697f
+  - enabled: 1
+    path: Assets/Scenes/WinTimed.unity
+    guid: 2f11873b9415a564bb5c9a589b54b35c
   m_configObjects: {}

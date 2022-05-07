@@ -42,9 +42,21 @@ public class PlayerManager : MonoBehaviour
         }
         if(other == winLine && GameManager.Instance.finalMode)
         {
-            PlayerPrefs.SetInt("HasWon", 1);
-            GameManager.Instance.UnlockTrophy(162161);
-            SceneManager.LoadScene("Win");
+            if(GameManager.Instance.gamemode == "Normal")
+            {
+                PlayerPrefs.SetInt("HasWon", 1);
+                GameManager.Instance.UnlockTrophy(162161);
+                SceneManager.LoadScene("Win");
+            }
+            else if(GameManager.Instance.gamemode == "Timed")
+            {
+                int score = (int)Mathf.Round(GameManager.Instance.timePassed);
+                GameManager.Instance.SubmitScore(score, score.ToString(), 722152, "");
+                GameManager.Instance.UnlockTrophy(162513);
+                PlayerPrefs.SetInt("HasWon", 1);
+                PlayerPrefs.SetInt("FinalTimeForSession", score);
+                SceneManager.LoadScene("WinTimed");
+            }
         }
     }
     public void Jumpscared()
