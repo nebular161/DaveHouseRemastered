@@ -14,10 +14,7 @@ public class PlayerManager : MonoBehaviour
 
     Dave dave;
 
-    public NavMeshAgent gottaSleep;
-
-    bool sleeping, alarmClockActive;
-    float sleepingFailsave; // sorry mystman
+    public Sprite stopwatchSprite;
 
     private void Start()
     {
@@ -31,12 +28,19 @@ public class PlayerManager : MonoBehaviour
         {
             GameManager.Instance.OnEnteredHouse();
         }
-        if (other == daveAngry && !dave.pied && !dave.spinning || other == stopwatch)
+        if (other == daveAngry && !dave.pied && !dave.spinning)
         {
-            stopwatch.gameObject.SetActive(false);
-            if(!beenJumpscared)
+            if (!beenJumpscared)
             {
                 GameManager.Instance.UnlockTrophy(162193);
+                Jumpscared();
+            }
+        }
+        if(other == stopwatch)
+        {
+            if (!beenJumpscared)
+            {
+                daveJumpscare.GetComponent<SpriteRenderer>().sprite = stopwatchSprite;
                 Jumpscared();
             }
         }
@@ -51,7 +55,7 @@ public class PlayerManager : MonoBehaviour
             else if(GameManager.Instance.gamemode == "Timed")
             {
                 int score = (int)Mathf.Round(GameManager.Instance.timePassed);
-                GameManager.Instance.SubmitScore(score, score.ToString(), 722152, "");
+                GameManager.Instance.SubmitScore(score, score.ToString(), 722152, $"Submitted on version {Application.version}");
                 GameManager.Instance.UnlockTrophy(162513);
                 PlayerPrefs.SetInt("HasWon", 1);
                 PlayerPrefs.SetInt("FinalTimeForSession", score);
@@ -61,7 +65,9 @@ public class PlayerManager : MonoBehaviour
     }
     public void Jumpscared()
     {
+        beenJumpscared = true;
         daveJumpscare.SetActive(true);
+        stopwatch.gameObject.SetActive(false);
         angryDave.SetActive(false);
         StartCoroutine(Jumpscare());
         move.lockPos = true;

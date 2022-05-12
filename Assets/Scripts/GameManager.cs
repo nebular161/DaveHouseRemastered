@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
     public bool chaseMode, finalMode;
 
     public ItemGuy itemGuy;
-    public GameObject bayerMan;
+    public GameObject bayerMan, rubyMan;
 
     public Dave dave;
     float timeThing;
@@ -98,7 +98,7 @@ public class GameManager : MonoBehaviour
         }
         if(timeThing <= 0)
         {
-            timeText.text = "Times Up!!!";
+            timeText.text = "Times up!";
             stopwatchHorrorCharacter666.SetActive(true);
         }
     }
@@ -160,6 +160,7 @@ public class GameManager : MonoBehaviour
         {
             daveHappy.SetActive(false);
             daveAngry.SetActive(true);
+            rubyMan.SetActive(true);
             secretThingOutside.SetActive(false);
             StartCoroutine(StopSchoolMusic());
             itemGuy.MoveTime();

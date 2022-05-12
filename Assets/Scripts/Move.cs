@@ -22,8 +22,12 @@ public class Move : MonoBehaviour
 
     public static Vector3 transPos;
 
+    private float baseFOV;
+    public float sprintFOVModifier;
+
     void Start()
     {
+        baseFOV = Camera.main.fieldOfView;
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
     }
@@ -56,6 +60,15 @@ public class Move : MonoBehaviour
             Vector3 targetVelocity = transform.TransformDirection(direction) * adjustedSpeed * Time.deltaTime;
             targetVelocity.y = rb.velocity.y;
             rb.velocity = targetVelocity;
+            //fov junk
+            if(isSprinting)
+            {
+                Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, baseFOV * sprintFOVModifier, Time.deltaTime * 8f);
+            }
+            else
+            {
+                Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, baseFOV, Time.deltaTime * 8f);
+            }
             //Stamina bar (referenced from baldi)
             if (isSprinting)
             {

@@ -7,53 +7,47 @@ public class RubyMan : MonoBehaviour
 {
     NavMeshAgent agent;
     public Transform player;
-    [SerializeField] float forceShowTime, anger;
-
-    public bool gettingAngry, angry, debug, playerInTrigger;
-
-    AudioSource audioSource;
+    [SerializeField] float anger;
     public SpriteRenderer spriteRenderer;
 
+    public bool gettingAngry, angry;
+
+    AudioSource audioSource;
+
     public AudioClip intro, loop;
-    public Sprite angryRuby;
-    public GameObject sprite;
+    public Sprite angryRuby, normalRuby;
 
     Color intial;
-
-    public Look look;
     void Start()
     {
         intial = RenderSettings.ambientLight;
         audioSource = GetComponent<AudioSource>();
         agent = GetComponent<NavMeshAgent>();
-        sprite.gameObject.SetActive(false);
+        Wander();
     }
     // Update is called once per frame
     private void FixedUpdate()
     {
-        if(GameManager.Instance.notebooks >= 2 || debug)
+        RaycastHit raycastHit;
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out raycastHit) && raycastHit.transform == transform)
         {
-            RaycastHit raycastHit;
-            if (Physics.Linecast(transform.position, player.position, out raycastHit) && raycastHit.transform.CompareTag("Player") && sprite.activeSelf && !look.lookingBehind)
-            {
-                gettingAngry = true;
-            }
-            else
-            {
-                gettingAngry = false;
-            }
+            gettingAngry = true;
+        }
+        else
+        {
+            gettingAngry = false;
         }
     }
     void Update()
     {
-        if(forceShowTime > 0)
+        if(Vector3.Distance(transform.position, agent.destination) < 5 && !angry)
         {
-            forceShowTime -= Time.deltaTime;
+            Wander();
         }
         if(gettingAngry)
         {
             anger += Time.deltaTime;
-            if(anger >= 0.3f && !angry)
+            if(anger >= 0.45f && !angry)
             {
                 angry = true;
                 audioSource.PlayOneShot(intro);
@@ -64,18 +58,7 @@ public class RubyMan : MonoBehaviour
         {
             anger -= Time.deltaTime;
         }
-        if(!angry)
-        {
-            if (forceShowTime > 0 && GameManager.Instance.notebooks >= 2 || debug)
-            {
-                spriteRenderer.gameObject.SetActive(true);
-            }
-            else
-            {
-                spriteRenderer.gameObject.SetActive(false);
-            }
-        }
-        else
+        if(angry)
         {
             RenderSettings.fog = true;
             RenderSettings.ambientLight = new Color(0.6f, 0.117647059f, 0.2f);
@@ -91,15 +74,12 @@ public class RubyMan : MonoBehaviour
     {
         agent.SetDestination(player.position);
     }
-    public void DoSometingLocationRelated(Vector3 location)
+    public void Wander()
     {
-        if(!angry & agent.isActiveAndEnabled)
-        {
-            agent.SetDestination(location);
-            forceShowTime = 3;
-        }
+        Transform wanderPoint = WanderPoints.Instance.GetWanderPoint();
+        agent.SetDestination(wanderPoint.position);
     }
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (angry && other.transform == player)
         {
@@ -115,7 +95,11 @@ public class RubyMan : MonoBehaviour
             Transform playerWarp = WanderPoints.Instance.GetWanderPoint();
             player.position = new Vector3(playerWarp.position.x, player.position.y, playerWarp.position.z);
             GameManager.Instance.UnlockTrophy(162188);
-            gameObject.SetActive(false);
+            angry = false;
+            anger = 0;
+            audioSource.Stop();
+            spriteRenderer.sprite = normalRuby;
+            Wander();
         }
     }
 }

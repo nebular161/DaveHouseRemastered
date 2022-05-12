@@ -22,7 +22,7 @@ public class WanderPoints : MonoBehaviour
             {
                 Vector3 newPos = wanderPoints[i].position;
                 newPos.y = 5;
-                Instantiate(ItemManager.Instance.itemDrop[Random.Range(1, ItemManager.Instance.itemDrop.Length - 1)], newPos, wanderPoints[i].rotation, wanderPoints[i]);
+                Instantiate(ItemManager.Instance.itemDrop[Random.Range(1, ItemManager.Instance.itemDrop.Length)], newPos, wanderPoints[i].rotation, wanderPoints[i]);
             }
         }
     }

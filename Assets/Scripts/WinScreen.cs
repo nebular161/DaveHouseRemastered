@@ -8,7 +8,7 @@ public class WinScreen : MonoBehaviour
     {
         if (PlayerPrefs.GetString("Gamemode") == "Timed")
         {
-            timeText.text = $"Final Time: {PlayerPrefs.GetInt("FinalTimeForSession")}";
+            timeText.text = $"Final Time: {PlayerPrefs.GetInt("FinalTimeForSession")} seconds";
         }
     }
     void Update()

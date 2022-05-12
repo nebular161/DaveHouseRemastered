@@ -1,12 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
-using System.IO;
-using Newtonsoft.Json;
 using UnityEngine.Audio;
+using System.Collections.Generic;
 
 public class MenuManager : MonoBehaviour
 {
@@ -15,6 +12,11 @@ public class MenuManager : MonoBehaviour
     [SerializeField] Menu[] menus;
     public AudioMixer audioMixer;
     public Slider volumeSlider, sensSlider;
+
+    public TMP_Text versionText;
+
+    Resolution[] resolutions;
+    public TMP_Dropdown resolutionDropdown;
 
     public void Awake()
     {
@@ -28,7 +30,9 @@ public class MenuManager : MonoBehaviour
         }
     }
     private void Start()
-    { 
+    {
+        versionText.text = $"v{Application.version}";
+        InitializeResolutionList();
         Cursor.lockState = CursorLockMode.None;
 
         if(PlayerPrefs.GetFloat("Sensitivity") < 50)
@@ -93,5 +97,32 @@ public class MenuManager : MonoBehaviour
     public void SetGameMode(string gamemode)
     {
         PlayerPrefs.SetString("Gamemode", gamemode);
+    }
+    public void InitializeResolutionList()
+    {
+        resolutions = Screen.resolutions;
+        resolutionDropdown.ClearOptions();
+        List<string> options = new List<string>();
+
+        int currentResIndex = 0;
+        for (int i = 0; i < resolutions.Length; i++)
+        {
+            string option = $"{resolutions[i].width} x {resolutions[i].height}";
+            options.Add(option);
+
+            if (resolutions[i].width == Screen.currentResolution.width && resolutions[i].height == Screen.currentResolution.height)
+            {
+                currentResIndex = i;
+            }
+        }
+
+        resolutionDropdown.AddOptions(options);
+        resolutionDropdown.value = currentResIndex;
+        resolutionDropdown.RefreshShownValue();
+    }
+    public void SetResolution(int resIndex)
+    {
+        Resolution resolution = resolutions[resIndex];
+        Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
     }
 }

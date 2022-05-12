@@ -37,6 +37,8 @@ public class ItemManager : MonoBehaviour
 
     int timesToTeleport = 10;
 
+    int distanceThingy;
+
     private void Awake()
     {
         Instance = this;
@@ -64,7 +66,8 @@ public class ItemManager : MonoBehaviour
         if(items[selectedItem] == 3)
         {
             entranceSearcher.gameObject.SetActive(true);
-            entranceSearcher.text = $"DISTANCE_FROM_SECRET: {Vector3.Distance(player.position, secretEntrance.position).ToString("0")} m";
+            distanceThingy = Mathf.RoundToInt(Vector3.Distance(player.position, secretEntrance.position) / 2.5f);
+            entranceSearcher.text = $"DISTANCE_FROM_SECRET: {distanceThingy} ft";
         }
         else
         {
@@ -192,7 +195,7 @@ public class ItemManager : MonoBehaviour
     public void TeleportPlayer()
     {
         Transform playerWarp = WanderPoints.Instance.GetWanderPoint();
-        player.position = new Vector3(playerWarp.position.x, player.position.y, playerWarp.position.z);
+        player.position = new Vector3(playerWarp.position.x, 2.5f, playerWarp.position.z);
         teleporterAudio.PlayOneShot(bew);
     }
     IEnumerator TeleportSequence()
