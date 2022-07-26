@@ -60,7 +60,6 @@ public class RubyMan : MonoBehaviour
         }
         if(angry)
         {
-            RenderSettings.fog = true;
             RenderSettings.ambientLight = new Color(0.6f, 0.117647059f, 0.2f);
             agent.speed += 30f * Time.deltaTime;
             TargetPlayer();
@@ -87,11 +86,14 @@ public class RubyMan : MonoBehaviour
             {
                 RenderSettings.ambientLight = Color.red;
             }
+            else if(RandomEvent.Instance.currentEvent == "LightsOut")
+            {
+                RenderSettings.ambientLight = Color.black;
+            }
             else
             {
                 RenderSettings.ambientLight = intial;
             }
-            RenderSettings.fog = false;
             Transform playerWarp = WanderPoints.Instance.GetWanderPoint();
             player.position = new Vector3(playerWarp.position.x, player.position.y, playerWarp.position.z);
             GameManager.Instance.UnlockTrophy(162188);

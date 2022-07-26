@@ -16,7 +16,18 @@ public class MenuManager : MonoBehaviour
     public TMP_Text versionText;
 
     Resolution[] resolutions;
+    Resolution selectedResolution;
     public TMP_Dropdown resolutionDropdown;
+    public Toggle fullscreenToggle;
+    public Toggle postProcessingToggle;
+
+    public string[] songList;
+    public AudioClip[] songs;
+    public AudioSource musicSource;
+
+    public TMP_Dropdown musicListDropdown;
+
+    public GameObject bossBattleButton;
 
     public void Awake()
     {
@@ -32,12 +43,25 @@ public class MenuManager : MonoBehaviour
     private void Start()
     {
         versionText.text = $"v{Application.version}";
+        LoadResSettings();
         InitializeResolutionList();
+        SetUpMusicList();
+        fullscreenToggle.isOn = Screen.fullScreen;
+
+        if(PlayerPrefs.GetInt("PostProcessing", 1) == 1)
+        {
+            postProcessingToggle.isOn = true;
+        }
+        else
+        {
+            postProcessingToggle.isOn = false;
+        }
+
         Cursor.lockState = CursorLockMode.None;
 
-        if(PlayerPrefs.GetFloat("Sensitivity") < 50)
+        if(PlayerPrefs.GetInt("BossBattleUnlocked") == 1)
         {
-            PlayerPrefs.SetFloat("Sensitivity", 100);
+            bossBattleButton.SetActive(true);
         }
 
         SetSliderValues();
@@ -87,8 +111,8 @@ public class MenuManager : MonoBehaviour
     }
     public void SetSliderValues()
     {
-        volumeSlider.value = PlayerPrefs.GetFloat("Volume");
-        sensSlider.value = PlayerPrefs.GetFloat("Sensitivity");
+        volumeSlider.value = PlayerPrefs.GetFloat("Volume", 0);
+        sensSlider.value = PlayerPrefs.GetFloat("Sensitivity", 100);
     }
     public void ExitGame()
     {
@@ -110,7 +134,7 @@ public class MenuManager : MonoBehaviour
             string option = $"{resolutions[i].width} x {resolutions[i].height}";
             options.Add(option);
 
-            if (resolutions[i].width == Screen.currentResolution.width && resolutions[i].height == Screen.currentResolution.height)
+            if (Mathf.Approximately(resolutions[i].width, selectedResolution.width) && Mathf.Approximately(resolutions[i].height, selectedResolution.height))
             {
                 currentResIndex = i;
             }
@@ -122,7 +146,62 @@ public class MenuManager : MonoBehaviour
     }
     public void SetResolution(int resIndex)
     {
-        Resolution resolution = resolutions[resIndex];
-        Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+        selectedResolution = resolutions[resIndex];
+        Screen.SetResolution(selectedResolution.width, selectedResolution.height, Screen.fullScreen);
+
+        PlayerPrefs.SetInt("ResWidth", selectedResolution.width);
+        PlayerPrefs.SetInt("ResHeight", selectedResolution.height);
+    }
+    public void SetFullscreen(bool fullscreen)
+    {
+        Screen.fullScreen = fullscreen;
+    }
+    public void SetPostProcessing(bool thing)
+    {
+        if(thing)
+        {
+            PlayerPrefs.SetInt("PostProcessing", 1);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("PostProcessing", 0);
+        }
+    }
+    public void LoadResSettings()
+    {
+        selectedResolution = new Resolution();
+        selectedResolution.width = PlayerPrefs.GetInt("ResWidth", Screen.currentResolution.width);
+        selectedResolution.height = PlayerPrefs.GetInt("ResHeight", Screen.currentResolution.height);
+
+        Screen.SetResolution(selectedResolution.width, selectedResolution.height, Screen.fullScreen);
+    }
+    public void SetUpMusicList()
+    {
+        musicListDropdown.ClearOptions();
+        List<string> stuff = new List<string>();
+
+        int currentMusicIndex = 0;
+        for (int i = 0; i < songList.Length; i++)
+        {
+            stuff.Add(songList[i]);
+
+            if (musicSource.clip == songs[i])
+            {
+                currentMusicIndex = i;
+            }
+        }
+
+        musicListDropdown.AddOptions(stuff);
+        musicListDropdown.value = currentMusicIndex;
+        musicListDropdown.RefreshShownValue();
+    }
+    public void SetSong(int index)
+    {
+        musicSource.clip = songs[index];
+        musicSource.Play();
+    }
+    public void StopMusic()
+    {
+        musicSource.Stop();
     }
 }

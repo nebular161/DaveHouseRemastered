@@ -10,9 +10,12 @@ public class Move : MonoBehaviour
     public float speed;
     public float sprintModifier;
 
-    public float stamina, staminaRate, maxStamina;
+    public LayerMask ground;
+    public Transform groundDetector;
 
-    public bool isWalking, lockPos;
+    public float stamina, staminaRate, maxStamina, jumpForce;
+
+    public bool isWalking, lockPos, enableJumping;
 
     public Slider staminaBar;
 
@@ -31,7 +34,32 @@ public class Move : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
     }
+    private void Update()
+    {
+        //Boolean
+        bool jump = Input.GetKeyDown(KeyCode.Space);
 
+        //States
+        bool isGrounded = Physics.CheckSphere(groundDetector.position, 0.4f, ground);
+        bool isJumping = jump && isGrounded;
+
+        //Joumping
+        if (isJumping && enableJumping)
+        {
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        }
+
+        if (rigidbodyVelocity > minVelocity && rigidbodyVelocity < maxVelocity)
+        {
+            isWalking = true;
+        }
+        else
+        {
+            isWalking = false;
+        }
+
+        rb.isKinematic = lockPos;
+    }
     private void FixedUpdate()
     {
         if (!lockPos)
@@ -41,6 +69,8 @@ public class Move : MonoBehaviour
 
             //Booleans
             bool sprint = Input.GetKey(KeyCode.LeftShift) & stamina >= 0f || Input.GetKey(KeyCode.RightShift) & stamina >= 0f;
+
+            //states
             bool isSprinting = sprint && y > 0;
 
             //Movement
@@ -90,18 +120,5 @@ public class Move : MonoBehaviour
         }
 
         
-    }
-    private void Update()
-    {
-        if (rigidbodyVelocity > minVelocity && rigidbodyVelocity < maxVelocity)
-        {
-            isWalking = true;
-        }
-        else
-        {
-            isWalking = false;
-        }
-
-        rb.isKinematic = lockPos;
     }
 }

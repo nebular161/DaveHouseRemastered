@@ -51,6 +51,8 @@ public class GameManager : MonoBehaviour
     public GameObject stopwatchThingies, stopwatchHorrorCharacter666;
 
     public float maxTimedModeTime;
+
+    public GameObject postProcessingHandler;
     private void Awake()
     {
         Instance = this;
@@ -71,6 +73,14 @@ public class GameManager : MonoBehaviour
         if(gamemode == "Timed")
         {
             stopwatchThingies.SetActive(true);
+        }
+        if(PlayerPrefs.GetInt("PostProcessing", 1) == 1)
+        {
+            postProcessingHandler.SetActive(true);
+        }
+        else
+        {
+            postProcessingHandler.SetActive(false);
         }
     }
     void Update()
@@ -164,6 +174,7 @@ public class GameManager : MonoBehaviour
             secretThingOutside.SetActive(false);
             StartCoroutine(StopSchoolMusic());
             itemGuy.MoveTime();
+            StartCoroutine(RandomEvent.Instance.ChooseEvent());
             chaseMode = true;
         }
     }
@@ -202,6 +213,7 @@ public class GameManager : MonoBehaviour
     }
     public void ActivateEndMode()
     {
+        RandomEvent.Instance.StopAllEvents();
         chaseMusic.Play();
         StartCoroutine(FadeToRed());
         doorToLockAfterDaveSpeak.UnlockDoor();

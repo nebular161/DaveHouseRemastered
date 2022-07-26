@@ -23,7 +23,7 @@ public class ItemManager : MonoBehaviour
     public Move playerMovement;
 
     public Transform player, cam, secretEntrance;
-    public GameObject pieMovingThing;
+    public GameObject pieMovingThing, sodaObject;
 
     public GameObject[] itemDrop;
 
@@ -174,9 +174,8 @@ public class ItemManager : MonoBehaviour
                 ReplaceItem(selectedItem, 0);
                 break;
             case 5:
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit daveHit;
-                if(Physics.Raycast(ray, out daveHit) && daveHit.transform == dave.transform && Vector3.Distance(dave.transform.position, player.position) <= 15)
+                if(Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out daveHit) && daveHit.transform == dave.transform && Vector3.Distance(dave.transform.position, player.position) <= 15)
                 {
                     dave.KnifeAttack();
                     ReplaceItem(selectedItem, 0);
@@ -185,6 +184,10 @@ public class ItemManager : MonoBehaviour
             case 6:
                 timesToTeleport = 10;
                 StartCoroutine(TeleportSequence());
+                ReplaceItem(selectedItem, 0);
+                break;
+            case 10:
+                Instantiate(sodaObject, cam.position, cam.rotation);
                 ReplaceItem(selectedItem, 0);
                 break;
             default:

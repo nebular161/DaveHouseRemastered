@@ -12,7 +12,7 @@ public class Door : MonoBehaviour
     public bool doorLocked;
     public bool doorOpen;
     public bool lockInfinite;
-    public bool nineDoor;
+    public bool nineDoor, blueLock, redLock, normalDoor;
     public float openingDistance;
     public float lockTime;
     public float openTime;
@@ -26,6 +26,10 @@ public class Door : MonoBehaviour
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
+        if(!nineDoor && !blueLock && !redLock)
+        {
+            normalDoor = true;
+        }
     }
 
     // Update is called once per frame
@@ -62,7 +66,15 @@ public class Door : MonoBehaviour
                 {
                     OpenDoor();
                 }
-                else if(!nineDoor)
+                else if(blueLock && ItemManager.Instance.items[ItemManager.Instance.selectedItem] == 7)
+                {
+                    OpenDoor();
+                }
+                else if(redLock && ItemManager.Instance.items[ItemManager.Instance.selectedItem] == 8)
+                {
+                    OpenDoor();
+                }
+                else if(!nineDoor && !blueLock && !redLock)
                 {
                     OpenDoor();
                 }
@@ -81,13 +93,10 @@ public class Door : MonoBehaviour
     }
     public void LockDoor(float time)
     {
-        if(!nineDoor)
-        {
-            doorLocked = true;
-            lockTime = time;
-            inside.material = lockedMaterial;
-            outside.material = lockedMaterial;
-        }
+        doorLocked = true;
+        lockTime = time;
+        inside.material = lockedMaterial;
+        outside.material = lockedMaterial;
     }
     public void UnlockDoor()
     {

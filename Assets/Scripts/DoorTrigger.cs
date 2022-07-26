@@ -11,7 +11,14 @@ public class DoorTrigger : MonoBehaviour
             Door temp = GetComponentInParent<Door>();
             if(!temp.doorLocked && !temp.doorOpen)
             {
-                temp.OpenDoor();
+                if(temp.nineDoor && GameManager.Instance.notebooks >= 9)
+                {
+                    temp.OpenDoor();
+                }
+                else if(!temp.nineDoor)
+                {
+                    temp.OpenDoor();
+                }
             }
         }
     }

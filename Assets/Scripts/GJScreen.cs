@@ -16,6 +16,21 @@ public class GJScreen : MonoBehaviour
     public Image avatar;
 
     Action<bool> callback;
+
+    private void Start()
+    {
+        if(PlayerPrefs.GetString("Username") != string.Empty && PlayerPrefs.GetString("Token") != string.Empty)
+        {
+            User user = new User(PlayerPrefs.GetString("Username"), PlayerPrefs.GetString("Token"));
+            user.SignIn((bool success) =>
+            {
+                if (success)
+                {
+                    Dismiss(true);
+                }
+            });
+        }
+    }
     public void LogIn()
     {
         if(username.text.Trim() == string.Empty || gameToken.text.Trim() == string.Empty)
@@ -29,7 +44,9 @@ public class GJScreen : MonoBehaviour
             {
                if (success)
                {
-                   Dismiss(true);
+                    PlayerPrefs.SetString("Username", username.text.Trim());
+                    PlayerPrefs.SetString("Token", gameToken.text.Trim());
+                    Dismiss(true);
                }
             });
             MenuManager.Instance.OpenMenu("Title");
@@ -38,6 +55,8 @@ public class GJScreen : MonoBehaviour
     public void LogOut()
     {
         GameJoltAPI.Instance.CurrentUser.SignOut();
+        PlayerPrefs.SetString("Username", string.Empty);
+        PlayerPrefs.SetString("Token", string.Empty);
         MenuManager.Instance.OpenMenu("Title");
     }
     public void Dismiss(bool success)

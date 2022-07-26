@@ -48,7 +48,7 @@ public class ItemGuy : MonoBehaviour
             {
                 ItemManager.Instance.Drop();
             }
-            ItemManager.Instance.ReplaceItem(ItemManager.Instance.selectedItem, Random.Range(1, 7));
+            ItemManager.Instance.ReplaceItem(ItemManager.Instance.selectedItem, Random.Range(1, 10));
             transform.position = new Vector3(transform.position.x, -45, transform.position.z);
             alreadyPlayedAttentionGrabber = false;
         }
