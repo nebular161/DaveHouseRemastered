@@ -219,7 +219,8 @@ public class MenuManager : MonoBehaviour
         }
         else
         {
-            if(bruh.downloadHandler.text != versionText.text)
+            Debug.Log(bruh.downloadHandler.text);
+            if(bruh.downloadHandler.text != Application.version)
             {
                 updateButton.gameObject.SetActive(true);
             }
