@@ -4,6 +4,8 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Audio;
 using System.Collections.Generic;
+using UnityEngine.Networking;
+using System.Collections;
 
 public class MenuManager : MonoBehaviour
 {
@@ -29,6 +31,7 @@ public class MenuManager : MonoBehaviour
 
     public GameObject bossBattleButton;
 
+    public Button updateButton;
     public void Awake()
     {
         if(Instance == null)
@@ -43,6 +46,7 @@ public class MenuManager : MonoBehaviour
     private void Start()
     {
         versionText.text = $"v{Application.version}";
+        StartCoroutine(GetVersion());
         LoadResSettings();
         InitializeResolutionList();
         SetUpMusicList();
@@ -203,5 +207,27 @@ public class MenuManager : MonoBehaviour
     public void StopMusic()
     {
         musicSource.Stop();
+    }
+    IEnumerator GetVersion()
+    {
+        UnityWebRequest bruh = UnityWebRequest.Get("https://github.com/Moldy-Games/DaveHouseRemastered/blob/main/versionNumber.txt");
+        yield return bruh.SendWebRequest();
+
+        if(bruh.result != UnityWebRequest.Result.Success)
+        {
+            Debug.Log("Failed");
+        }
+        else
+        {
+            if(bruh.downloadHandler.text != versionText.text)
+            {
+                updateButton.gameObject.SetActive(true);
+            }
+        }
+    }
+    public void UpdateGame()
+    {
+        Application.OpenURL("https://gamejolt.com/games/daveshouse/713289");
+        Application.Quit();
     }
 }
