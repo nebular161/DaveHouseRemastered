@@ -190,6 +190,14 @@ public class ItemManager : MonoBehaviour
                 Instantiate(sodaObject, cam.position, cam.rotation);
                 ReplaceItem(selectedItem, 0);
                 break;
+            case 11:
+                RaycastHit dvdPlayerHit;
+                if(Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out dvdPlayerHit) && dvdPlayerHit.transform.CompareTag("DVDPlayer") && Vector3.Distance(dvdPlayerHit.transform.position, player.position) <= 15)
+                {
+                    DiscPlayer.Instance.GetClip();
+                    ReplaceItem(selectedItem, 0);
+                }
+                break;
             default:
                 Debug.Log("haha this item has no use");
                 break;

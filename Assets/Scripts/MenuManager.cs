@@ -13,7 +13,7 @@ public class MenuManager : MonoBehaviour
 
     [SerializeField] Menu[] menus;
     public AudioMixer audioMixer;
-    public Slider volumeSlider, sensSlider;
+    public Slider volumeSlider, sensSlider, loadingBar;
 
     public TMP_Text versionText;
 
@@ -32,6 +32,8 @@ public class MenuManager : MonoBehaviour
     public GameObject bossBattleButton;
 
     public Button updateButton;
+
+    public TMP_Text percentageText;
     public void Awake()
     {
         if(Instance == null)
@@ -102,7 +104,7 @@ public class MenuManager : MonoBehaviour
     public void LoadScene(string scene)
     {
         OpenMenu("Loading");
-        SceneManager.LoadScene(scene);
+        StartCoroutine(LoadSceneAsynchronously(scene));
     }
     public void ChangeVolume()
     {
@@ -210,17 +212,17 @@ public class MenuManager : MonoBehaviour
     }
     IEnumerator GetVersion()
     {
-        UnityWebRequest bruh = UnityWebRequest.Get("https://github.com/Moldy-Games/DaveHouseRemastered/blob/main/versionNumber.txt");
+        UnityWebRequest bruh = UnityWebRequest.Get("https://raw.githubusercontent.com/Moldy-Games/DaveHouseRemastered/main/versionNumber.txt");
         yield return bruh.SendWebRequest();
 
-        if(bruh.result != UnityWebRequest.Result.Success)
+        if(bruh.result == UnityWebRequest.Result.ConnectionError)
         {
-            Debug.Log("Failed");
+            Debug.Log(bruh.error);
         }
         else
         {
-            Debug.Log(bruh.downloadHandler.text);
-            if(bruh.downloadHandler.text != Application.version)
+            Debug.Log($"Version text downloaded: {bruh.downloadHandler.text}");
+            if (bruh.downloadHandler.text != Application.version)
             {
                 updateButton.gameObject.SetActive(true);
             }
@@ -229,6 +231,24 @@ public class MenuManager : MonoBehaviour
     public void UpdateGame()
     {
         Application.OpenURL("https://gamejolt.com/games/daveshouse/713289");
+        Application.Quit();
+    }
+    IEnumerator LoadSceneAsynchronously(string scene)
+    {
+        AsyncOperation operation = SceneManager.LoadSceneAsync(scene);
+        float loadingPercentage;
+
+        while(!operation.isDone)
+        {
+            loadingBar.value = operation.progress;
+            loadingPercentage = operation.progress * 100;
+            percentageText.text = $"{loadingPercentage.ToString("0")}%";
+            yield return null;
+        }
+    }
+    public void DeleteData()
+    {
+        PlayerPrefs.DeleteAll();
         Application.Quit();
     }
 }
