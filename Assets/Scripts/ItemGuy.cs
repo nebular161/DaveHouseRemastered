@@ -10,7 +10,7 @@ public class ItemGuy : MonoBehaviour
 
     AudioSource soundPlayer;
     public AudioClip[] giveSounds;
-    public AudioClip attentionGrabberSound;
+    public AudioClip attentionGrabberSound, scamSound, finalMode;
 
     private void Start()
     {
@@ -30,7 +30,7 @@ public class ItemGuy : MonoBehaviour
     }
     private void Update()
     {
-        if(Vector3.Distance(transform.position, player.position) <= 20 && !alreadyPlayedAttentionGrabber)
+        if (Vector3.Distance(transform.position, player.position) <= 20 && !alreadyPlayedAttentionGrabber)
         {
             soundPlayer.clip = attentionGrabberSound;
             soundPlayer.Play();
@@ -39,18 +39,64 @@ public class ItemGuy : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
-            GameManager.Instance.UnlockTrophy(162194);
-            soundPlayer.clip = giveSounds[Random.Range(0, giveSounds.Length)];
-            soundPlayer.Play();
-            if(ItemManager.Instance.selectedItem != 0)
+            if(!GameManager.Instance.finalMode)
             {
-                ItemManager.Instance.Drop();
+                int theScamValue = Random.Range(0, 5);
+                bool scammed = theScamValue == 3;
+
+                if (scammed)
+                {
+                    if (ItemManager.Instance.items[0] == 0 && ItemManager.Instance.items[1] == 0 && ItemManager.Instance.items[2] == 0)
+                    {
+                        GiveItem();
+                    }
+                    else
+                    {
+                        TakeItem();
+                    }
+                }
+                else
+                {
+                    GiveItem();
+                }
             }
-            ItemManager.Instance.ReplaceItem(ItemManager.Instance.selectedItem, Random.Range(1, 10));
-            transform.position = new Vector3(transform.position.x, -45, transform.position.z);
-            alreadyPlayedAttentionGrabber = false;
+            else
+            {
+                for (int i = 0; i < ItemManager.Instance.items.Length; i++)
+                {
+                    ItemManager.Instance.items[i] = 0;
+                }
+                soundPlayer.clip = finalMode;
+                soundPlayer.Play();
+            }
         }
     }
+    public void GiveItem()
+    {
+        GameManager.Instance.UnlockTrophy(162194);
+        soundPlayer.clip = giveSounds[Random.Range(0, giveSounds.Length)];
+        soundPlayer.Play();
+        ItemManager.Instance.DropItem(ItemManager.Instance.items[ItemManager.Instance.selectedItem]);
+        ItemManager.Instance.ReplaceItem(ItemManager.Instance.selectedItem, Random.Range(1, ItemManager.Instance.itemDrop.Length));
+        transform.position = new Vector3(transform.position.x, -45, transform.position.z);
+        alreadyPlayedAttentionGrabber = false;
+    }
+    public void TakeItem()
+    {
+        GameManager.Instance.UnlockTrophy(173544);
+        int theNumberOne = Random.Range(0, 2);
+        while (ItemManager.Instance.items[theNumberOne] == 0)
+        {
+            theNumberOne = Random.Range(0, 2);
+        }
+        ItemManager.Instance.ReplaceItem(theNumberOne, 0);
+        soundPlayer.clip = scamSound;
+        soundPlayer.Play();
+        transform.position = new Vector3(transform.position.x, -45, transform.position.z);
+        alreadyPlayedAttentionGrabber = false;
+    }
+
+    // this code is terrible stop looking at this!
 }

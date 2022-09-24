@@ -24,6 +24,12 @@ public class RandomEvent : MonoBehaviour
     public GameObject eventBox;
 
     public string currentEvent;
+
+    public Material blackSkybox, normalSkybox;
+
+    [SerializeField] float minTime, maxTime;
+
+    public Look look;
     private void Awake()
     {
         Instance = this;
@@ -31,7 +37,7 @@ public class RandomEvent : MonoBehaviour
     public IEnumerator ChooseEvent()
     {
         currentEvent = "Choosing";
-        yield return new WaitForSeconds(Random.Range(100f, 120f));
+        yield return new WaitForSeconds(Random.Range(minTime, maxTime));
         announceIndex = Random.Range(0, announcements.Length);
         source.PlayOneShot(announcements[announceIndex]);
         yield return new WaitForSeconds(announcements[announceIndex].length);
@@ -51,9 +57,11 @@ public class RandomEvent : MonoBehaviour
     {
         source.PlayOneShot(lightsOff);
         RenderSettings.ambientLight = Color.black;
+        RenderSettings.skybox = blackSkybox;
         flashlight.SetActive(true);
         yield return new WaitForSeconds(Random.Range(45f, 60f));
         RenderSettings.ambientLight = Color.white;
+        RenderSettings.skybox = normalSkybox;
         flashlight.SetActive(false);
         StartCoroutine(ChooseEvent());
     }
@@ -71,6 +79,19 @@ public class RandomEvent : MonoBehaviour
         });
         StartCoroutine(ChooseEvent());
     }
+    IEnumerator UpsideDown()
+    {
+        DOVirtual.Float(0, 180, 1, theValue =>
+        {
+            look.flipValue = theValue;
+        });
+        yield return new WaitForSeconds(Random.Range(40f, 60f));
+        DOVirtual.Float(180, 0, 1, theValue =>
+        {
+            look.flipValue = theValue;
+        });
+        StartCoroutine(ChooseEvent());
+    }
     public void StopAllEvents()
     {
         if(currentEvent == "Choosing")
@@ -81,6 +102,7 @@ public class RandomEvent : MonoBehaviour
         {
             StopCoroutine(LightsOut());
             RenderSettings.ambientLight = Color.white;
+            RenderSettings.skybox = normalSkybox;
             flashlight.SetActive(false);       
         }
         else if(currentEvent == "FogMode")
@@ -90,6 +112,14 @@ public class RandomEvent : MonoBehaviour
             DOVirtual.Float(0.04f, 0f, 2, bruh =>
             {
                 RenderSettings.fogDensity = bruh;
+            });
+        }
+        else if(currentEvent == "UpsideDown")
+        {
+            StopCoroutine(UpsideDown());
+            DOVirtual.Float(180, 0, 1, theValue =>
+            {
+                look.flipValue = theValue;
             });
         }
     }

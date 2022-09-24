@@ -19,7 +19,7 @@ public class GameOverScreens : MonoBehaviour
         hahaHilarious = Random.Range(0, 666);
         if(hahaHilarious != 666 && !debug)
         { 
-            image.sprite = sprites[Random.Range(0, sprites.Length - 1)];
+            image.sprite = sprites[Random.Range(0, sprites.Length)];
             StartCoroutine(NormalGameOver());
         }
         else

@@ -14,7 +14,7 @@ PlayerSettings:
   accelerometerFrequency: 60
   companyName: Moldy Games
   productName: Dave's House
-  defaultCursor: {fileID: 0}
+  defaultCursor: {fileID: 2800000, guid: f36628a94d18a3e42a8ee8e5e2b3222c, type: 3}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.18356179, g: 0.2092301, b: 0.23584908, a: 1}
   m_ShowUnitySplashScreen: 1
@@ -129,7 +129,7 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: 1.3.1
+  bundleVersion: 1.3.5
   preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0

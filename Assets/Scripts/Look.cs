@@ -14,14 +14,14 @@ public class Look : MonoBehaviour
     public bool lockRot;
 
     float lookBehind;
+    public float flipValue;
 
-    public bool lookingBehind, enableLookBack;
-
+    public bool lookingBehind, enableLookBack, flipMode;
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
 
-        mouseSens = PlayerPrefs.GetFloat("Sensitivity");
+        mouseSens = PlayerPrefs.GetFloat("Sensitivity", 100);
     }
 
     // Update is called once per frame
@@ -32,12 +32,10 @@ public class Look : MonoBehaviour
             if (Input.GetKey(KeyCode.Space))
             {
                 lookBehind = 180;
-                lookingBehind = true;
             }
             else
             {
                 lookBehind = 0;
-                lookingBehind = false;
             }
         }
         if (!lockRot)
@@ -45,13 +43,15 @@ public class Look : MonoBehaviour
             x += -Input.GetAxis("Mouse Y") * mouseSens * Time.deltaTime;
             y += Input.GetAxis("Mouse X") * mouseSens * Time.deltaTime;
         }
+        lookingBehind = lookBehind == 180;
+        flipMode = flipValue == 180;
         //Clamp camera
 
         y = y % 360;
         x = Mathf.Clamp(x, -90, 90);
 
         //Rotate camera to axis
-        transform.localRotation = Quaternion.Euler(x, lookBehind, 0);
+        transform.localRotation = Quaternion.Euler(x, lookBehind, flipValue);
         player.transform.localRotation = Quaternion.Euler(0, y, 0);
     }
 }

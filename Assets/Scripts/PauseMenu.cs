@@ -2,16 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 [System.Serializable]
 public class PauseMenu : MonoBehaviour
 {
     public GameObject pauseMenu;
     bool paused;
-    void Start()
-    {
-        
-    }
+
+    public TMP_Text pauseText;
+
+    public PlayerManager playerManager;
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.Escape))
@@ -33,6 +34,14 @@ public class PauseMenu : MonoBehaviour
                 Time.timeScale = 1;
                 SceneManager.LoadScene("Menu");
             }
+        }
+        if(RandomEvent.Instance.currentEvent == "LightsOut" || playerManager.inPadGame)
+        {
+            pauseText.color = Color.white;
+        }
+        else
+        {
+            pauseText.color = Color.black;
         }
     }
 }

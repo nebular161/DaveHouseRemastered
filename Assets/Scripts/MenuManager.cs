@@ -6,6 +6,7 @@ using UnityEngine.Audio;
 using System.Collections.Generic;
 using UnityEngine.Networking;
 using System.Collections;
+using System;
 
 public class MenuManager : MonoBehaviour
 {
@@ -29,7 +30,7 @@ public class MenuManager : MonoBehaviour
 
     public TMP_Dropdown musicListDropdown;
 
-    public GameObject bossBattleButton;
+    public GameObject bossBattleButton, extrasButton;
 
     public Button updateButton;
 
@@ -53,24 +54,13 @@ public class MenuManager : MonoBehaviour
         InitializeResolutionList();
         SetUpMusicList();
         fullscreenToggle.isOn = Screen.fullScreen;
-
-        if(PlayerPrefs.GetInt("PostProcessing", 1) == 1)
-        {
-            postProcessingToggle.isOn = true;
-        }
-        else
-        {
-            postProcessingToggle.isOn = false;
-        }
-
-        Cursor.lockState = CursorLockMode.None;
-
-        if(PlayerPrefs.GetInt("BossBattleUnlocked") == 1)
-        {
-            bossBattleButton.SetActive(true);
-        }
+        postProcessingToggle.isOn = Convert.ToBoolean(PlayerPrefs.GetInt("PostProcessing", 1));
+        extrasButton.SetActive(Convert.ToBoolean(PlayerPrefs.GetInt("HasWon", 0)));
+        bossBattleButton.SetActive(Convert.ToBoolean(PlayerPrefs.GetInt("BossBattleUnlocked", 0)));
 
         SetSliderValues();
+
+        Cursor.lockState = CursorLockMode.None;
     }
     public void OpenMenu(string name)
     {

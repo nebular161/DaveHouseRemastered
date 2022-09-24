@@ -32,7 +32,7 @@ public class Dave : MonoBehaviour
         {
             if (!playerSeen && !daveAudio.isPlaying)
             {
-                daveAudio.PlayOneShot(foundClips[Random.Range(0, foundClips.Length - 1)]);
+                daveAudio.PlayOneShot(foundClips[Random.Range(0, foundClips.Length)]);
             }
             playerSeen = true;
             currentSpeed = fastSpeed;
@@ -43,7 +43,7 @@ public class Dave : MonoBehaviour
         {
             if (!daveAudio.isPlaying)
             {
-                daveAudio.PlayOneShot(lostClips[Random.Range(0, lostClips.Length - 1)]);
+                daveAudio.PlayOneShot(lostClips[Random.Range(0, lostClips.Length)]);
             }
             playerSeen = false;
             return;

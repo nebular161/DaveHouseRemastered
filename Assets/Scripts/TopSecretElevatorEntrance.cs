@@ -21,8 +21,14 @@ public class TopSecretElevatorEntrance : MonoBehaviour
             if(other.tag == "Player")
             {
                 ItemManager.Instance.ReplaceItem(ItemManager.Instance.selectedItem, 0);
-                transform.DOMoveY(10, 5);
+                StartCoroutine(ChangeElevatorPosition());
             }
         }
+    }
+    IEnumerator ChangeElevatorPosition()
+    {
+        transform.DOMoveY(10, 5);
+        yield return new WaitForSeconds(Random.Range(30f, 70f));
+        transform.DOMoveY(0, 5);
     }
 }

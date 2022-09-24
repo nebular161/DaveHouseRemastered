@@ -5,9 +5,9 @@ using UnityEngine.AI;
 
 public class PlayerManager : MonoBehaviour
 {
-    public Collider daveSpeakTrigger, daveAngry, winLine, stopwatch;
-    public bool beenJumpscared;
-    public GameObject daveJumpscare, angryDave;
+    public Collider daveSpeakTrigger, daveAngry, winLine, stopwatch, playRobot;
+    public bool beenJumpscared, inPadGame;
+    public GameObject daveJumpscare, angryDave, gameUI;
 
     Move move;
     Look look;
@@ -15,6 +15,8 @@ public class PlayerManager : MonoBehaviour
     Dave dave;
 
     public Sprite stopwatchSprite;
+
+    public PlayRobot playRobotScript;
 
     private void Start()
     {
@@ -62,16 +64,31 @@ public class PlayerManager : MonoBehaviour
                 SceneManager.LoadScene("WinTimed");
             }
         }
+        if(other == playRobot && !inPadGame && playRobotScript.gameCooldown <= 0)
+        {
+            move.lockPos = true;
+            look.lockRot = true;
+            playRobotScript.StartGame();
+            inPadGame = true;
+        }
     }
     public void Jumpscared()
     {
         beenJumpscared = true;
+        gameUI.SetActive(false);
         daveJumpscare.SetActive(true);
         stopwatch.gameObject.SetActive(false);
         angryDave.SetActive(false);
         StartCoroutine(Jumpscare());
         move.lockPos = true;
         look.lockRot = true;
+    }
+    public void EndPadGame()
+    {
+        playRobotScript.aud.PlayOneShot(playRobotScript.end);
+        move.lockPos = false;
+        look.lockRot = false;
+        inPadGame = false;
     }
     IEnumerator Jumpscare()
     {

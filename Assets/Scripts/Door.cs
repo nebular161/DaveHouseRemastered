@@ -19,9 +19,9 @@ public class Door : MonoBehaviour
 
     public MeshRenderer inside, outside;
 
-    public Material openMaterial, closedMaterial, lockedMaterial;
+    public Material openMaterial, closedMaterial, lockedMaterial, closedNormal;
 
-    public AudioClip doorOpenAud, doorCloseAud;
+    public AudioClip doorOpenAud, doorCloseAud, doorUnlock;
 
     void Start()
     {
@@ -68,11 +68,19 @@ public class Door : MonoBehaviour
                 }
                 else if(blueLock && ItemManager.Instance.items[ItemManager.Instance.selectedItem] == 7)
                 {
+                    blueLock = false;
+                    audioSource.PlayOneShot(doorUnlock);
+                    closedMaterial = closedNormal;
                     OpenDoor();
+                    ItemManager.Instance.ReplaceItem(ItemManager.Instance.selectedItem, 0);
                 }
                 else if(redLock && ItemManager.Instance.items[ItemManager.Instance.selectedItem] == 8)
                 {
+                    redLock = false;
+                    audioSource.PlayOneShot(doorUnlock);
+                    closedMaterial = closedNormal;
                     OpenDoor();
+                    ItemManager.Instance.ReplaceItem(ItemManager.Instance.selectedItem, 0);
                 }
                 else if(!nineDoor && !blueLock && !redLock)
                 {

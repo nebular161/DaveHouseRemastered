@@ -39,6 +39,11 @@ public class ItemManager : MonoBehaviour
 
     int distanceThingy;
 
+    public PlayRobot playRobot;
+    public PadGame padGame;
+
+    public GameObject minimapCamera, minimapObject;
+
     private void Awake()
     {
         Instance = this;
@@ -73,6 +78,9 @@ public class ItemManager : MonoBehaviour
         {
             entranceSearcher.gameObject.SetActive(false);
         }
+
+        minimapCamera.SetActive(items[selectedItem] == 13);
+        minimapObject.SetActive(items[selectedItem] == 13);
 
         playerPosition = player.position;
         playerPosition.y = player.position.y + 3;
@@ -165,7 +173,7 @@ public class ItemManager : MonoBehaviour
         switch (items[selectedItem])
         {
             case 1:
-                playerMovement.stamina = 250;
+                playerMovement.stamina += 150;
                 GameManager.Instance.UnlockTrophy(162186);
                 ReplaceItem(selectedItem, 0);
                 break;
@@ -198,8 +206,19 @@ public class ItemManager : MonoBehaviour
                     ReplaceItem(selectedItem, 0);
                 }
                 break;
-            default:
-                Debug.Log("haha this item has no use");
+            case 12:
+                if(padGame.inProgessQuestion)
+                {
+                    GameManager.Instance.UnlockTrophy(173232);
+                    player.GetComponent<PlayerManager>().EndPadGame();
+                    StartCoroutine(padGame.VirusDetected());
+                    playRobot.ActivateVirusMode();
+                    ReplaceItem(selectedItem, 0);
+                }
+                break;
+            case 14:
+                playerMovement.stamina += 75;
+                ReplaceItem(selectedItem, 0);
                 break;
         }
     }

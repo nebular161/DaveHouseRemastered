@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
     public bool chaseMode, finalMode;
 
     public ItemGuy itemGuy;
-    public GameObject bayerMan, rubyMan;
+    public GameObject bayerMan, rubyMan, playRobot;
 
     public Dave dave;
     float timeThing;
@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour
 
     public float maxTimedModeTime;
 
-    public GameObject postProcessingHandler;
+    public GameObject postProcessingHandler, randomEventObject;
     private void Awake()
     {
         Instance = this;
@@ -74,14 +74,7 @@ public class GameManager : MonoBehaviour
         {
             stopwatchThingies.SetActive(true);
         }
-        if(PlayerPrefs.GetInt("PostProcessing", 1) == 1)
-        {
-            postProcessingHandler.SetActive(true);
-        }
-        else
-        {
-            postProcessingHandler.SetActive(false);
-        }
+        postProcessingHandler.SetActive(Convert.ToBoolean(PlayerPrefs.GetInt("PostProcessing", 1)));
     }
     void Update()
     {
@@ -171,6 +164,7 @@ public class GameManager : MonoBehaviour
             daveHappy.SetActive(false);
             daveAngry.SetActive(true);
             rubyMan.SetActive(true);
+            playRobot.SetActive(true);
             secretThingOutside.SetActive(false);
             StartCoroutine(StopSchoolMusic());
             itemGuy.MoveTime();
@@ -194,6 +188,8 @@ public class GameManager : MonoBehaviour
     }
     IEnumerator FadeToRed()
     {
+        RandomEvent.Instance.StopAllEvents();
+        randomEventObject.SetActive(false);
         yield return new WaitForSeconds(2.79f);
         Color color = RenderSettings.ambientLight;
         DOVirtual.Color(color, Color.red, 2.79f, colores =>
@@ -213,7 +209,6 @@ public class GameManager : MonoBehaviour
     }
     public void ActivateEndMode()
     {
-        RandomEvent.Instance.StopAllEvents();
         chaseMusic.Play();
         StartCoroutine(FadeToRed());
         doorToLockAfterDaveSpeak.UnlockDoor();
