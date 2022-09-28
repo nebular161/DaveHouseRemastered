@@ -53,6 +53,8 @@ public class GameManager : MonoBehaviour
     public float maxTimedModeTime;
 
     public GameObject postProcessingHandler, randomEventObject;
+
+    public bool skippedLegDay = true;
     private void Awake()
     {
         Instance = this;

@@ -6625,9 +6625,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 113414, guid: 7a2e587034d846647b593aa159d7ed8d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 124444, guid: 7a2e587034d846647b593aa159d7ed8d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 132600, guid: 7a2e587034d846647b593aa159d7ed8d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 155568, guid: 7a2e587034d846647b593aa159d7ed8d, type: 3}
       propertyPath: m_Name
       value: GameJoltAPI
+      objectReference: {fileID: 0}
+    - target: {fileID: 191248, guid: 7a2e587034d846647b593aa159d7ed8d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 481182, guid: 7a2e587034d846647b593aa159d7ed8d, type: 3}
       propertyPath: m_RootOrder
@@ -6673,6 +6689,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11440656, guid: 7a2e587034d846647b593aa159d7ed8d, type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 1be806866f5c5964baeb375fae92b231, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7a2e587034d846647b593aa159d7ed8d, type: 3}
 --- !u!1 &894359278

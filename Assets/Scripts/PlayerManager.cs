@@ -48,6 +48,10 @@ public class PlayerManager : MonoBehaviour
         }
         if(other == winLine && GameManager.Instance.finalMode)
         {
+            if(GameManager.Instance.skippedLegDay)
+            {
+                GameManager.Instance.UnlockTrophy(173715);
+            }
             if(GameManager.Instance.gamemode == "Normal")
             {
                 PlayerPrefs.SetInt("HasWon", 1);

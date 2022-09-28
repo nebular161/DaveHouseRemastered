@@ -94,6 +94,7 @@ public class Move : MonoBehaviour
             if(isSprinting)
             {
                 Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, baseFOV * sprintFOVModifier, Time.deltaTime * 8f);
+                GameManager.Instance.skippedLegDay = false;
             }
             else
             {
